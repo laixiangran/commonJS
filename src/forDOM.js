@@ -99,8 +99,8 @@
                         name = "styleFloat";
                     }
 
-                    // TODO 待理解S.camelize()
-                    var ret = curStyle[name] || curStyle[S.camelize(name)];
+                    // TODO 待理解com.$S.camelize()
+                    var ret = curStyle[name] || curStyle[com.$S.camelize(name)];
 
                     // TODO 待理解
                     if (!/^-?\d+(?:px)?$/i.test(ret) && /^\-?\d/.test(ret)) {
@@ -133,7 +133,7 @@
                     } else if (name == "float") {
                         elem.style[com.$B.browser.ie ? "styleFloat" : "cssFloat" ] = value;
                     } else {
-                        elem.style[S.camelize(name)] = value;
+                        elem.style[com.$S.camelize(name)] = value;
                     }
                 }
             });
