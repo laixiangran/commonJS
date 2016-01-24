@@ -460,6 +460,9 @@
     var com = window.COM = window.COM || {};
 
     com.$D = {
+        byID: function(id) {
+            return document.getElementById(id.toString());
+        },
         getScrollTop: function(node) {
             var doc = node ? node.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
