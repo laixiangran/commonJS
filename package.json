@@ -1,0 +1,37 @@
+{
+  "name": "commonJS",
+  "version": "1.0.0",
+  "description": "汇集常用方法的javaScript库",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "colorPicker"
+  ],
+  "homepage": "https://github.com/laixiangran/commonJS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laixiangran/commonJS.git"
+  },
+  "author": {
+    "name": "laixiangran",
+    "email": "laixiangran@163.com",
+    "url": "http://www.cnblogs.com/laixiangran/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-cache": "^0.4.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.3",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1",
+    "jshint": "^2.8.0"
+  }
+}
