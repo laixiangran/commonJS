@@ -834,9 +834,9 @@
                 if (name == "float") {
                     name = "styleFloat";
                 }
-                // TODO 待理解com.$S.camelize()
                 var ret = curStyle[name] || curStyle[com.$S.camelize(name)];
-                // TODO 待理解
+
+                // 单位转换
                 if (!/^-?\d+(?:px)?$/i.test(ret) && /^\-?\d/.test(ret)) {
                     var left = style.left,
                         rtStyle = elem.runtimeStyle,
@@ -875,8 +875,9 @@
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
             if (!width && !height) {
-                var repair = !this.contains(document.body, elem), parent;
-                if (repair) { // 如果元素不在body上
+                var repair = this.contains(document.body, elem),
+                    parent;
+                if (!repair) { // 如果元素不在body上
                     parent = elem.parentNode;
                     document.body.insertBefore(elem, document.body.childNodes[0]);
                 }
@@ -1123,16 +1124,20 @@
     var com = window.COM = window.COM || {};
 
     com.$S = {
-        camelize: function(s) {
-            return s.replace(/-([a-z])/ig, function(all, letter) {
+        // 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor"
+        camelize: function(str) {
+            return str.replace(/-([a-z])/ig, function(all, letter) {
                 return letter.toUpperCase();
             });
         },
+
+        // 去掉字符串首尾空格
         trim: function(str) {
             return str.replace(/^\s+|\s+$/g, "");
         },
-        rgbToHex: function(str) {
 
+        // RGB转十六进制
+        rgbToHex: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
             if (/^(rgb|RGB)/.test(str)) {
@@ -1164,8 +1169,9 @@
                 return str;
             }
         },
-        hexToRgb: function(str) {
 
+        // 十六进制转RGB
+        hexToRgb: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
             var sColor = str.toLowerCase();

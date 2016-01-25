@@ -172,9 +172,9 @@
                 if (name == "float") {
                     name = "styleFloat";
                 }
-                // TODO 待理解com.$S.camelize()
                 var ret = curStyle[name] || curStyle[com.$S.camelize(name)];
-                // TODO 待理解
+
+                // 单位转换
                 if (!/^-?\d+(?:px)?$/i.test(ret) && /^\-?\d/.test(ret)) {
                     var left = style.left,
                         rtStyle = elem.runtimeStyle,
@@ -213,8 +213,9 @@
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
             if (!width && !height) {
-                var repair = !this.contains(document.body, elem), parent;
-                if (repair) { // 如果元素不在body上
+                var repair = this.contains(document.body, elem),
+                    parent;
+                if (!repair) { // 如果元素不在body上
                     parent = elem.parentNode;
                     document.body.insertBefore(elem, document.body.childNodes[0]);
                 }
