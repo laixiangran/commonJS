@@ -22,7 +22,7 @@
     * @param obj 数据
     * @param str 用于判断的数据类型
     * */
-    commonJS.getOrIsType = (function() {
+    com.getOrIsType = (function() {
         var reg = /^(\w)/,
             regFn = function($, $1) {
                 return $1.toUpperCase();
