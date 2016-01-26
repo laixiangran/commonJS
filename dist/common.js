@@ -731,8 +731,14 @@
         * 根据id获取元素
         * @param id 元素id
         * */
-        byID: function(id) {
-            return document.getElementById(id.toString());
+        byID: function(id, context) {
+            var ctx = context || document;
+            return ctx.getElementById(id);
+        },
+
+        byClassName: function(className, context) {
+            var ctx = context || document;
+            return ctx.getElementsByClassName(className);
         },
 
         /*
@@ -977,7 +983,9 @@
     var com = window.COM = window.COM || {};
 
     com.$E = (function() {
-        var addEvent, removeEvent, guid = 1,
+        var addEvent,
+            removeEvent,
+            guid = 1,
             storage = function(element, type, handler) {
                 if (!handler.$$guid) handler.$$guid = guid++;
                 if (!element.events) element.events = {};
@@ -998,7 +1006,7 @@
                 if (type in fix) {
                     storage(element, type, handler);
                     var fixhandler = element.events[type][handler.$$guid] = function(event) {
-                        var related = event.relatedTarget;
+                        var related = event.relatedTarget; // 返回当鼠标移动时哪个元素进入或退出
                         if (!related || (element != related && !(element.compareDocumentPosition(related) && 16))) {
                             handler.call(this, event);
                         }
@@ -1051,10 +1059,12 @@
             event.stopPropagation = stopPropagation;
             event.preventDefault = preventDefault;
             var relatedTarget = {
-                "mouseout": event.toElement, "mouseover": event.fromElement
-            }[ event.type ];
-            if ( relatedTarget ){ event.relatedTarget = relatedTarget;}
-
+                "mouseout": event.toElement,
+                "mouseover": event.fromElement
+            }[event.type];
+            if (relatedTarget) {
+                event.relatedTarget = relatedTarget;
+            }
             return event;
         }
         function stopPropagation() {
@@ -1305,15 +1315,9 @@
          * 使用domReady.ready()将执行函数加入队列中
          **/
         domReady: (function() {
-            var domReady = {};
-
-            // 用于判定页面是否加载完毕
-            domReady.isReady = false;
-
-            domReady.fns = [];
 
             // 用于添加要执行的函数
-            domReady.ready = function() {
+            var domReady = function() {
                 var fnArr = Array.prototype.slice.call(arguments);
 
                 // 页面如果加载完毕则直接运行
@@ -1326,6 +1330,11 @@
                     domReady.fns = fnArr;
                 }
             };
+
+            // 用于判定页面是否加载完毕
+            domReady.isReady = false;
+
+            domReady.fns = [];
 
             // 执行所有在window.onload之前放入的函数
             domReady.fireReady = function() {

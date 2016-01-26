@@ -8,7 +8,9 @@
     var com = window.COM = window.COM || {};
 
     com.$E = (function() {
-        var addEvent, removeEvent, guid = 1,
+        var addEvent,
+            removeEvent,
+            guid = 1,
             storage = function(element, type, handler) {
                 if (!handler.$$guid) handler.$$guid = guid++;
                 if (!element.events) element.events = {};
@@ -29,7 +31,7 @@
                 if (type in fix) {
                     storage(element, type, handler);
                     var fixhandler = element.events[type][handler.$$guid] = function(event) {
-                        var related = event.relatedTarget;
+                        var related = event.relatedTarget; // 返回当鼠标移动时哪个元素进入或退出
                         if (!related || (element != related && !(element.compareDocumentPosition(related) && 16))) {
                             handler.call(this, event);
                         }
@@ -82,10 +84,12 @@
             event.stopPropagation = stopPropagation;
             event.preventDefault = preventDefault;
             var relatedTarget = {
-                "mouseout": event.toElement, "mouseover": event.fromElement
-            }[ event.type ];
-            if ( relatedTarget ){ event.relatedTarget = relatedTarget;}
-
+                "mouseout": event.toElement,
+                "mouseover": event.fromElement
+            }[event.type];
+            if (relatedTarget) {
+                event.relatedTarget = relatedTarget;
+            }
             return event;
         }
         function stopPropagation() {

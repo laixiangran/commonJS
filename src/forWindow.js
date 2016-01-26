@@ -51,15 +51,9 @@
          * 使用domReady.ready()将执行函数加入队列中
          **/
         domReady: (function() {
-            var domReady = {};
-
-            // 用于判定页面是否加载完毕
-            domReady.isReady = false;
-
-            domReady.fns = [];
 
             // 用于添加要执行的函数
-            domReady.ready = function() {
+            var domReady = function() {
                 var fnArr = Array.prototype.slice.call(arguments);
 
                 // 页面如果加载完毕则直接运行
@@ -72,6 +66,11 @@
                     domReady.fns = fnArr;
                 }
             };
+
+            // 用于判定页面是否加载完毕
+            domReady.isReady = false;
+
+            domReady.fns = [];
 
             // 执行所有在window.onload之前放入的函数
             domReady.fireReady = function() {
