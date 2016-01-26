@@ -727,18 +727,17 @@
     var com = window.COM = window.COM || {};
 
     com.$D = {
-        /*
-        * 根据id获取元素
-        * @param id 元素id
-        * */
         byID: function(id, context) {
             var ctx = context || document;
             return ctx.getElementById(id);
         },
-
         byClassName: function(className, context) {
             var ctx = context || document;
             return ctx.getElementsByClassName(className);
+        },
+        byTagName: function(tagName, context) {
+            var ctx = context || document;
+            return ctx.getElementsByTagName(tagName);
         },
 
         /*
