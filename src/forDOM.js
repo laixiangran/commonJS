@@ -9,14 +9,19 @@
     var com = window.COM = window.COM || {};
 
     com.$D = {
-        byID: function(id, context) {
+        // 根据id查找
+        byId: function(id, context) {
             var ctx = context || document;
             return ctx.getElementById(id);
         },
+
+        // 根据类名查找
         byClassName: function(className, context) {
             var ctx = context || document;
             return ctx.getElementsByClassName(className);
         },
+
+        // 根据标签名查找
         byTagName: function(tagName, context) {
             var ctx = context || document;
             return ctx.getElementsByTagName(tagName);
@@ -25,12 +30,12 @@
         /*
          * iframe高度自适应
          * @param id iframe的id
-         * @param end 计算的时间
+         * @param endTime 计算的时间
          * */
-        adjustIframe: function(id, end) {
-            var iframe = this.byID(id),
+        adjustIframe: function(id, endTime) {
+            var iframe = this.byId(id),
                 time = 0,
-                end = end || 30,
+                end = endTime || 30,
                 intervalID;
             if (iframe) {
                 function callback() {
@@ -95,21 +100,33 @@
                 callback(element);
             };
         },
+
+        // 获取元素被窗口卷去的上部分高度
         getScrollTop: function(node) {
             var doc = node ? node.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
         },
+
+        // 获取元素被窗口卷去的左部分宽度
         getScrollLeft: function(node) {
             var doc = node ? node.ownerDocument : document;
             return doc.documentElement.scrollLeft || doc.body.scrollLeft;
         },
+
+        /*
+        * 元素是否包含某元素
+        * @parma nodeA 包含元素
+        * @param nodeB 被包含元素
+        * */
         contains: document.defaultView ?
-            function(a, b) {
-                return !!(a.compareDocumentPosition(b) & 16);
+            function(nodeA, nodeB) {
+                return !!(nodeA.compareDocumentPosition(nodeB) & 16);
             } :
-            function(a, b) {
-                return a != b && a.contains(b);
+            function(nodeA, nodeB) {
+                return nodeA != nodeB && nodeA.contains(nodeB);
             },
+
+        // 获取元素的范围（包括窗口不可见的部分）
         rect: function(node) {
             var left = 0,
                 top = 0,
@@ -141,6 +158,8 @@
                 "bottom": bottom
             };
         },
+
+        // 获取元素在窗口可见的范围
         clientRect: function(node) {
             var rect = this.rect(node),
                 sLeft = this.getScrollLeft(node),
@@ -151,6 +170,8 @@
             rect.bottom -= sTop;
             return rect;
         },
+
+        // 获取所有css属性
         curStyle: document.defaultView ?
             function(elem) {
                 return document.defaultView.getComputedStyle(elem, null);
@@ -158,6 +179,12 @@
             function(elem) {
                 return elem.currentStyle;
             },
+
+        /*
+        * 获取元素指定的css属性的值
+        * @param elem 当前元素
+        * @parma name css属性名
+        * */
         getStyle: document.defaultView ?
             function(elem, name) { // 现代浏览器，包括IE9+
                 var style = document.defaultView.getComputedStyle(elem, null);
@@ -192,6 +219,13 @@
                 }
                 return ret;
             },
+
+        /*
+         * 设置元素指定的css属性的值
+         * @param elem 当前元素
+         * @parma style css属性名
+         * @param value css属性的指
+         * */
         setStyle: function(elems, style, value) {
             if (!elems.length) {
                 elems = [elems];
@@ -214,13 +248,15 @@
                 }
             });
         },
+
+        // 获取元素大小
         getSize: function(elem) {
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
             if (!width && !height) {
                 var repair = this.contains(document.body, elem),
                     parent;
-                if (!repair) { // 如果元素不在body上
+                if (!repair) { // 元素不在body上
                     parent = elem.parentNode;
                     document.body.insertBefore(elem, document.body.childNodes[0]);
                 }
@@ -243,7 +279,7 @@
                 width = elem.offsetWidth;
                 height = elem.offsetHeight;
                 this.setStyle(elem, cssBack);
-                if (repair) {
+                if (!repair) {
                     parent ? parent.appendChild(elem) : document.body.removeChild(elem);
                 }
             }

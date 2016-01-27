@@ -5,10 +5,12 @@
     <title>commonJS 测试</title>
     <script src="../dist/common.js"></script>
     <script>
-        console.log(COM);
+        COM.$W.domReady(function() {
+
+        });
     </script>
 </head>
 <body>
-
+<span id="main"></span>
 </body>
 </html>
