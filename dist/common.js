@@ -771,10 +771,10 @@
 
         /*
          * 拖拽元素
-         * @param element 拖拽的元素
+         * @param elem 拖拽的元素
          * @param callback 拖拽结束之后的回调函数
          * */
-        drag: function(element, callback) {
+        drag: function(elem, callback) {
             callback = callback || function() {};
             var $D = this;
             var params = {
@@ -784,13 +784,13 @@
                 currentY: 0,
                 flag: false
             };
-            if ($D.getStyle(element, "left") !== "auto") {
-                params.left = $D.getStyle(element, "left");
+            if ($D.getStyle(elem, "left") !== "auto") {
+                params.left = $D.getStyle(elem, "left");
             }
-            if ($D.getStyle(element, "top") !== "auto") {
-                params.top = $D.getStyle(element, "top");
+            if ($D.getStyle(elem, "top") !== "auto") {
+                params.top = $D.getStyle(elem, "top");
             }
-            element.onmousedown = function(event) {
+            elem.onmousedown = function(event) {
                 params.flag = true;
                 event = event || window.event;
                 params.currentX = event.clientX;
@@ -803,67 +803,71 @@
                         nowY = event.clientY;
                     var disX = nowX - params.currentX,
                         disY = nowY - params.currentY;
-                    element.style.left = parseInt(params.left) + disX + "px";
-                    element.style.top = parseInt(params.top) + disY + "px";
+                    elem.style.left = parseInt(params.left) + disX + "px";
+                    elem.style.top = parseInt(params.top) + disY + "px";
                 }
             };
             document.onmouseup = function() {
                 params.flag = false;
-                if ($D.getStyle(element, "left") !== "auto") {
-                    params.left = $D.getStyle(element, "left");
+                if ($D.getStyle(elem, "left") !== "auto") {
+                    params.left = $D.getStyle(elem, "left");
                 }
-                if ($D.getStyle(element, "top") !== "auto") {
-                    params.top = $D.getStyle(element, "top");
+                if ($D.getStyle(elem, "top") !== "auto") {
+                    params.top = $D.getStyle(elem, "top");
                 }
-                callback(element);
+                callback(elem);
             };
         },
 
         // 获取元素被窗口卷去的上部分高度
-        getScrollTop: function(node) {
-            var doc = node ? node.ownerDocument : document;
+        getScrollTop: function(elem) {
+            var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
         },
 
         // 获取元素被窗口卷去的左部分宽度
-        getScrollLeft: function(node) {
-            var doc = node ? node.ownerDocument : document;
+        getScrollLeft: function(elem) {
+            var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollLeft || doc.body.scrollLeft;
         },
 
-        /*
-        * 元素是否包含某元素
-        * @parma nodeA 包含元素
-        * @param nodeB 被包含元素
-        * */
-        contains: document.defaultView ?
-            function(nodeA, nodeB) {
-                return !!(nodeA.compareDocumentPosition(nodeB) & 16);
-            } :
-            function(nodeA, nodeB) {
-                return nodeA != nodeB && nodeA.contains(nodeB);
-            },
+        // 获取元素的左偏移量
+        getElementLeft: function(elem) {
+            var actualLeft = elem.offsetLeft;
+            var current = elem.offsetParent;
+            while (current !== null) {
+                actualLeft += current.offsetLeft;
+                current = current.offsetParent;
+            }
+            return actualLeft;
+        },
+
+        // 获取元素的上偏移量
+        getElementTop: function(elem) {
+            var actualTop = elem.offsetTop;
+            var current = elem.offsetParent;
+            while (current !== null) {
+                actualTop += current. offsetTop;
+                current = current.offsetParent;
+            }
+            return actualTop;
+        },
 
         // 获取元素的范围（包括窗口不可见的部分）
-        rect: function(node) {
+        rect: function(elem) {
             var left = 0,
                 top = 0,
                 right = 0,
                 bottom = 0;
-            // ie8获取不准确
-            if (!node.getBoundingClientRect || com.$B.browser.ver == 8) {
-                var n = node;
-                while (n) {
-                    left += n.offsetLeft;
-                    top += n.offsetTop;
-                    n = n.offsetParent;
-                }
-                right = left + node.offsetWidth;
-                bottom = top + node.offsetHeight;
+            if (!elem.getBoundingClientRect) {
+                left = this.getElementLeft(elem);
+                top = this.getElementTop(elem);
+                right = left + elem.offsetWidth;
+                bottom = top + elem.offsetHeight;
             } else {
-                var rect = node.getBoundingClientRect();
-                left = right = this.getScrollLeft(node);
-                top = bottom = this.getScrollTop(node);
+                var rect = elem.getBoundingClientRect();
+                left = right = this.getScrollLeft(elem);
+                top = bottom = this.getScrollTop(elem);
                 left += rect.left;
                 right += rect.right;
                 top += rect.top;
@@ -878,10 +882,10 @@
         },
 
         // 获取元素在窗口可见的范围
-        clientRect: function(node) {
-            var rect = this.rect(node),
-                sLeft = this.getScrollLeft(node),
-                sTop = this.getScrollTop(node);
+        clientRect: function(elem) {
+            var rect = this.rect(elem),
+                sLeft = this.getScrollLeft(elem),
+                sTop = this.getScrollTop(elem);
             rect.left -= sLeft;
             rect.right -= sLeft;
             rect.top -= sTop;
@@ -889,28 +893,66 @@
             return rect;
         },
 
+        // 获取浏览器视口大小
+        getViewport: function() {
+            if (document.compatMode == "BackCompat") { // 判断是否运行在混杂模式
+                return {
+                    "width": document.body.clientWidth,
+                    "height": document.body.clientHeight
+                };
+            } else {
+                return {
+                    "width": document.documentElement.clientWidth,
+                    "height": document.documentElement.clientHeight
+                };
+            }
+        },
+
+        /*
+         * 元素是否包含某元素
+         * @parma elemA 包含元素
+         * @param elemB 被包含元素
+         * */
+        contains: function(elemA, elemB) {
+            if (typeof elemA.contains == "function" && (!COM.$B.engine.webkit || COM.$B.engine.webkit >= 522)) {
+                return elemA.contains(elemB);
+            } else if (typeof elemA.compareDocumentPosition == "function") {
+                return !!(elemA.compareDocumentPosition(elemB) & 16);
+            } else {
+                var node = elemB.parentNode;
+                do {
+                    if (node === elemA) {
+                        return true;
+                    } else {
+                        node = node.parentNode;
+                    }
+                } while (node !== null);
+                return false;
+            }
+        },
+
         // 获取所有css属性
-        curStyle: document.defaultView ?
-            function(elem) {
+        curStyle: function(elem) {
+            if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
                 return document.defaultView.getComputedStyle(elem, null);
-            } :
-            function(elem) {
+            } else {
                 return elem.currentStyle;
-            },
+            }
+        },
 
         /*
         * 获取元素指定的css属性的值
         * @param elem 当前元素
         * @parma name css属性名
         * */
-        getStyle: document.defaultView ?
-            function(elem, name) { // 现代浏览器，包括IE9+
-                var style = document.defaultView.getComputedStyle(elem, null);
+        getStyle: function(elem, name) {
+            var style = null;
+            if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
+                style = document.defaultView.getComputedStyle(elem, null);
                 return name in style ? style[name] : style.getPropertyValue(name);
-            } :
-            function(elem, name) { // IE8-
-                var style = elem.style,
-                    curStyle = elem.currentStyle;
+            } else {
+                var curStyle = elem.currentStyle;
+                style = elem.style;
 
                 if (name == "opacity") {
                     if (/alpha\(opacity=(.*)\)/i.test(curStyle.filter)) {
@@ -936,7 +978,8 @@
                     rtStyle.left = rsLeft;
                 }
                 return ret;
-            },
+            }
+        },
 
         /*
          * 设置元素指定的css属性的值
@@ -955,13 +998,15 @@
             }
             com.$A.forEach(elems, function(elem) {
                 for (var name in style) {
-                    var value = style[name];
-                    if (name == "opacity" && com.$B.browser.ie) {
-                        elem.style.filter = (elem.currentStyle && elem.currentStyle.filter || "").replace( /alpha\([^)]*\)/, "" ) + " alpha(opacity=" + (value * 100 | 0) + ")";
-                    } else if (name == "float") {
-                        elem.style[com.$B.browser.ie ? "styleFloat" : "cssFloat" ] = value;
-                    } else {
-                        elem.style[com.$S.camelize(name)] = value;
+                    if (style.hasOwnProperty(name)) {
+                        var value = style[name];
+                        if (name == "opacity" && com.$B.browser.ie) {
+                            elem.style.filter = (elem.currentStyle && elem.currentStyle.filter || "").replace( /alpha\([^)]*\)/, "" ) + " alpha(opacity=" + (value * 100 | 0) + ")";
+                        } else if (name == "float") {
+                            elem.style[com.$B.browser.ie ? "styleFloat" : "cssFloat" ] = value;
+                        } else {
+                            elem.style[com.$S.camelize(name)] = value;
+                        }
                     }
                 }
             });
