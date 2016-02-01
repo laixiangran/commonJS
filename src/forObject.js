@@ -1,6 +1,6 @@
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Object
  */
 

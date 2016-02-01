@@ -1,6 +1,6 @@
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Array
  */
 
@@ -123,7 +123,7 @@
 
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Browser
  */
 
@@ -667,7 +667,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Date
  */
 
@@ -718,7 +718,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for DOM
  */
 
@@ -1010,7 +1010,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Event
  */
 (function(undefined) {
@@ -1117,7 +1117,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Function
  */
 
@@ -1145,7 +1145,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Number
  */
 
@@ -1168,7 +1168,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Object
  */
 
@@ -1223,7 +1223,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for String
  */
 
@@ -1306,7 +1306,7 @@
 }());
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Window
  */
 (function() {
