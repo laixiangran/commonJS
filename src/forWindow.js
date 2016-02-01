@@ -9,43 +9,6 @@
 
     com.$W = {
 
-        // 在文档中添加样式
-        addSheet: function() {
-            var doc, cssCode;
-            if (arguments.length == 1) {
-                doc = document;
-                cssCode = arguments[0];
-            }else if (arguments.length == 2) {
-                doc = arguments[0];
-                cssCode = arguments[1];
-            }else {
-                alert("addSheet函数最多接受两个参数!");
-            }
-            var headElement = doc.getElementsByTagName("head")[0];
-            var styleElements = headElement.getElementsByTagName("style");
-            if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // ie
-                    doc.createStyleSheet();
-                }else {
-                    var tempStyleElement = doc.createElement("style"); //w3c
-                    tempStyleElement.setAttribute("type", "text/css");
-                    headElement.appendChild(tempStyleElement);
-                }
-            }
-            var  styleElement = styleElements[0];
-            var media = styleElement.getAttribute("media");
-            if (media != null && !/screen/.test(media.toLowerCase())) {
-                styleElement.setAttribute("media", "screen");
-            }
-            if (!+"\v1") {    // ie
-                styleElement.styleSheet.cssText += cssCode;
-            }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
-            }else{
-                styleElement.appendChild(doc.createTextNode(cssCode))
-            }
-        },
-
         /**
          * 在window.onload前执行，相当于jq的ready()
          * 使用domReady.ready()将执行函数加入队列中
