@@ -8,7 +8,6 @@
     var com = window.COM = window.COM || {};
 
     com.$W = {
-
         /**
          * 在window.onload前执行，相当于jq的ready()
          * 使用domReady.ready()将执行函数加入队列中
@@ -53,13 +52,12 @@
             // 开始初始化domReady函数，判定页面的加载情况
             if (document.readyState === "complete") {
                 domReady.fireReady();
-            } else if (-[1,]) {
+            } else if (com.$B.browser.ie) {
                 document.addEventListener("DOMContentLoaded", function() {
                     document.removeEventListener("DOMContentLoaded", arguments.callee, false);
                     domReady.fireReady();
                 }, false);
             } else {
-
                 // 当页面包含图片时，onreadystatechange事件会触发在window.onload之后，
                 // 换言之，它只能正确地执行于页面不包含二进制资源或非常少或者被缓存时
                 document.attachEvent("onreadystatechange", function() {
@@ -68,7 +66,7 @@
                         domReady.fireReady();
                     }
                 });
-                (function(){
+                function isDoScroll() {
                     if (domReady.isReady) {
                         return;
                     }
@@ -82,11 +80,12 @@
                     }catch (e) {
 
                         // javascrpt最短时钟间隔为16ms，这里取其倍数
-                        setTimeout(arguments.callee, 64);
+                        setTimeout(isDoScroll, 64);
                         return;
                     }
                     domReady.fireReady();
-                })();
+                }
+                isDoScroll();
             }
             return domReady;
         }()),

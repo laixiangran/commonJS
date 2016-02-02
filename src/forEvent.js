@@ -27,6 +27,13 @@
                 mouseenter: "mouseover",
                 mouseleave: "mouseout"
             };
+
+            /*
+             * 注册事件
+             * @param element(Element) 绑定事件的元素
+             * @param type(String) 事件类型
+             * @param handler(Function) 事件处理函数
+             * */
             addEvent = function(element, type, handler) {
                 if (type in fix) {
                     storage(element, type, handler);
@@ -41,6 +48,12 @@
                     element.addEventListener(type, handler, false);
                 }
             };
+            /*
+             * 取消注册的事件
+             * @param element(Element) 绑定事件的元素
+             * @param type(String) 事件类型
+             * @param handler(Function) 事件处理函数
+             * */
             removeEvent = function(element, type, handler) {
                 if (type in fix) {
                     if (element.events && element.events[type]) {
