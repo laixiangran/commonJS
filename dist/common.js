@@ -916,7 +916,7 @@
         },
 
         // 获取元素的范围（包括窗口不可见的部分）
-        rect: function(elem) {
+        getRect: function(elem) {
             var left = 0,
                 top = 0,
                 right = 0,
@@ -944,7 +944,7 @@
         },
 
         // 获取元素在窗口可见的范围
-        clientRect: function(elem) {
+        getClientRect: function(elem) {
             var rect = this.rect(elem),
                 sLeft = this.getScrollLeft(elem),
                 sTop = this.getScrollTop(elem);
@@ -994,7 +994,7 @@
         },
 
         // 获取所有css属性
-        curStyle: function(elem) {
+        getCurStyle: function(elem) {
             if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
                 return document.defaultView.getComputedStyle(elem, null);
             } else {
@@ -1112,6 +1112,31 @@
                 "width": width,
                 "height": height
             };
+        },
+
+        // 选择文本框中的文本
+        selectText: function(textbox, startIndex, stopIndex) {
+            if (textbox.setSelectionRange) {
+                textbox.setSelectionRange(startIndex, stopIndex);
+            } else if (textbox.createTextRange) {
+                var range = textbox.createTextRange();
+                range.collapse(true);
+                range.moveStart("character", startIndex);
+                range.moveEnd("character", stopIndex - startIndex);
+                range.select();
+            }
+            textbox.focus();
+        },
+
+        // 获取文本框中选择的文本
+        getSelectedText: function(textbox) {
+            if (typeof textbox.selectionStart == "number") {
+                return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
+            } else if (document.selection) {
+                // 兼容IE8及更早的版本，document.selection.createRange()保存着用户在整个文档范围内选择的文本信息。
+                // 在与select事件一起使用的时候，可以假定是用户选择了文本框中的文本，因而触发了该事件，故可实现获取文本框中选择的文本
+                return document.selection.createRange().text;
+            }
         }
     };
 }(window));
