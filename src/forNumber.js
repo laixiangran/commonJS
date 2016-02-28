@@ -4,7 +4,7 @@
  * for Number
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -20,4 +20,4 @@
             return Math[num < 0 ? "ceil" : "floor"](this);
         }
     };
-}());
+}(window));

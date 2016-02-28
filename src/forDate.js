@@ -4,7 +4,7 @@
  * for Date
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -48,4 +48,4 @@
             return d.getDate();
         }
     };
-}());
+}(window));

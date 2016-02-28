@@ -4,7 +4,7 @@
  * for Function
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -25,4 +25,4 @@
             }
         };
     }());
-}());
+}(window));

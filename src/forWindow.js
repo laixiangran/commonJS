@@ -3,7 +3,7 @@
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Window
  */
-(function() {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -24,10 +24,10 @@
             var headElement = doc.getElementsByTagName("head")[0];
             var styleElements = headElement.getElementsByTagName("style");
             if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // ie
+                if (!+"\v1") {    // IE
                     doc.createStyleSheet();
                 }else {
-                    var tempStyleElement = doc.createElement("style"); //w3c
+                    var tempStyleElement = doc.createElement("style"); // w3c
                     tempStyleElement.setAttribute("type", "text/css");
                     headElement.appendChild(tempStyleElement);
                 }
@@ -37,10 +37,10 @@
             if (media != null && !/screen/.test(media.toLowerCase())) {
                 styleElement.setAttribute("media", "screen");
             }
-            if (!+"\v1") {    // ie
+            if (!+"\v1") {    // IE
                 styleElement.styleSheet.cssText += cssCode;
             }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
+                styleElement.innerHTML += cssCode; // firefox支持直接innerHTML添加样式表字串
             }else{
                 styleElement.appendChild(doc.createTextNode(cssCode))
             }
@@ -51,7 +51,6 @@
          * 使用domReady.ready()将执行函数加入队列中
          **/
         domReady: (function() {
-
             // 用于添加要执行的函数
             var domReady = function() {
                 var fnArr = Array.prototype.slice.call(arguments);
@@ -88,19 +87,18 @@
             };
 
             // 开始初始化domReady函数，判定页面的加载情况
-            if (document.readyState === "complete") {
+            if (document.readyState == "interactive" || document.readyState == "complete") {
                 domReady.fireReady();
-            } else if (-[1,]) {
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            } else if (!com.$B.engine.ie) {
+                com.$E.addEvent(document, "DOMContentLoaded", function() {
+                    com.$E.removeEvent(document, "DOMContentLoaded", arguments.callee);
                     domReady.fireReady();
-                }, false);
+                });
             } else {
-
-                // 当页面包含图片时，onreadystatechange事件会触发在window.onload之后，
-                // 换言之，它只能正确地执行于页面不包含二进制资源或非常少或者被缓存时
+                // 当页面包含较多或较大的外部资源，readystatechange事件会在load事件触发之前先进入交互阶段，
+                // 而在包含较少或较小的外部资源的页面中，则很难说readystatechange事件会发生在load事件前面
                 document.attachEvent("onreadystatechange", function() {
-                    if (document.readyState == "complete") {
+                    if (document.readyState == "interactive" || document.readyState == "complete") {
                         document.detachEvent("onreadystatechange", arguments.callee);
                         domReady.fireReady();
                     }
@@ -117,7 +115,6 @@
                         node.doScroll();
                         node = null; // 防止IE内存泄漏
                     }catch (e) {
-
                         // javascrpt最短时钟间隔为16ms，这里取其倍数
                         setTimeout(arguments.callee, 64);
                         return;
@@ -171,4 +168,4 @@
             return func;
         }())
     };
-}());
+}(window));

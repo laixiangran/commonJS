@@ -3,7 +3,7 @@
  * homepage: http://www.cnblogs.com/laixiangran/
  * for COM（命名空间）
  */
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -264,4 +264,4 @@
         }
     };
 
-}());
+}(window));

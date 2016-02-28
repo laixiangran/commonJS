@@ -4,7 +4,7 @@
  * for Browser
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -222,4 +222,4 @@
     $B.engine = engine;
     $B.browser = browser;
     $B.system = system;
-}());
+}(window));

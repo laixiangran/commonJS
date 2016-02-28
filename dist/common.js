@@ -4,7 +4,7 @@
  * for Array
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -119,7 +119,7 @@
 
         return ret;
     }());
-}());
+}(window));
 
 /**
  * Created by laixiangran on 2016/1/24
@@ -127,7 +127,7 @@
  * for Browser
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -345,13 +345,13 @@
     $B.engine = engine;
     $B.browser = browser;
     $B.system = system;
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/25.
  * homepage: http://www.cnblogs.com/laixiangran/
  * for COM（命名空间）
  */
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -612,14 +612,14 @@
         }
     };
 
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * homepage: http://www.cnblogs.com/laixiangran/
  * for CustomEvent
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -664,14 +664,14 @@
             }
         };
     }());
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Date
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -715,14 +715,14 @@
             return d.getDate();
         }
     };
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for DOM
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1052,121 +1052,151 @@
             };
         }
     };
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Event
  */
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
-    com.$E = (function() {
-        var addEvent,
-            removeEvent,
-            guid = 1,
-            storage = function(element, type, handler) {
-                if (!handler.$$guid) handler.$$guid = guid++;
-                if (!element.events) element.events = {};
-                var handlers = element.events[type];
-                if (!handlers) {
-                    handlers = element.events[type] = {};
-                    if (element["on" + type]) {
-                        handlers[0] = element["on" + type];
-                    }
+    com.$E = {
+        // 添加事件
+        addEvent: function(element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+
+        // 移除事件处理程序
+        removeEvent: function(element, type, handler) {
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                element.detachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = null;
+            }
+        },
+
+        // 获取对event对象的引用
+        getEvent: function(event) {
+            return event ? event : window.event;
+        },
+
+        // 获取事件的目标
+        getTarget: function(event) {
+            return event.target || event.srcElement;
+        },
+
+        // 取消事件的默认行为
+        preventDefault: function(event) {
+            if (event.preventDefault){
+                event.preventDefault();
+            } else {
+                event.returnValue = false; // IE
+            }
+        },
+
+        // 阻止事件流（由于IE不支持事件捕获，该方法只能阻止事件冒泡）
+        stopPropagation: function(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true; // IE
+            }
+        },
+
+        // 获取事件相关元素
+        getRelatedTarget: function(event) {
+            if (event.relatedTarget) {
+                return event.relatedTarget;
+            } else if (event.toElement) { // IE下的mouseout事件
+                return event.toElement;
+            } else if (event.fromElement) { // IE下的mouseover事件
+                return event.fromElement;
+            } else {
+                return null;
+            }
+        },
+
+        // 获取鼠标按钮值（0：主鼠标按钮（一般是鼠标左键），1：中间的鼠标按钮（鼠标滚轮按钮），2：次鼠标按钮（一般是鼠标右键））
+        getButton: function(event) {
+            //  检测是否支持DOM版鼠标事件
+            if (document.implementation.hasFeature("MouseEvents", "2.0")) {
+                return event.button;
+            } else { // IE
+                switch (event.button) {
+                    case 0:
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                        return 0;
+                    case 2:
+                    case 6:
+                        return 2;
+                    case 4:
+                        return 1;
                 }
-            };
-        if (window.addEventListener) {
-            var fix = {
-                mouseenter: "mouseover",
-                mouseleave: "mouseout"
-            };
-            addEvent = function(element, type, handler) {
-                if (type in fix) {
-                    storage(element, type, handler);
-                    var fixhandler = element.events[type][handler.$$guid] = function(event) {
-                        var related = event.relatedTarget; // 返回当鼠标移动时哪个元素进入或退出
-                        if (!related || (element != related && !(element.compareDocumentPosition(related) && 16))) {
-                            handler.call(this, event);
-                        }
-                    };
-                    element.addEventListener(fix[type], fixhandler, false);
-                } else {
-                    element.addEventListener(type, handler, false);
-                }
-            };
-            removeEvent = function(element, type, handler) {
-                if (type in fix) {
-                    if (element.events && element.events[type]) {
-                        element.removeEventListener(fix[type], element.events[type][handler.$$guid], false);
-                        delete element.events[type][handler.$$guid];
-                    }
-                } else {
-                    element.removeEventListener(type, handler, false);
-                }
-            };
-        } else {
-            addEvent = function(element, type, handler) {
-                storage(element, type, handler);
-                element.events[type][handler.$$guid] = handler;
-                element["on" + type] = handleEvent;
-            };
-            removeEvent = function(element, type, handler) {
-                if (element.events && element.events[type]) {
-                    delete element.events[type][handler.$$guid];
-                }
-            };
-            function handleEvent() {
-                var returnValue = true,
-                    event = fixEvent();
-                var handlers = this.events[event.type];
-                for (var i in handlers) {
-                    this.$$handleEvent = handlers[i];
-                    if (this.$$handleEvent(event) === false) {
-                        returnValue = false;
-                    }
-                }
-                return returnValue;
+            }
+        },
+
+        // 获取鼠标滚轮增量值
+        getWheelDelta: function(event) {
+            // 当向前滚动鼠标滚轮时，wheelDelta是120的倍数；当向后滚动鼠标滚轮时，wheelDelta是-120的倍数
+            if (event.wheelDelta){
+                // Opera 9.5之前的版本中，wheelDelta值的正负号是颠倒的，则这里需要使用浏览器检测技术来确定实际的值
+                return (com.$B.engine.opera && com.$B.engine.opera < 9.5 ?
+                        -event.wheelDelta : event.wheelDelta);
+            } else { // Firefox下，有关鼠标滚轮的信息则保存在detail属性中，当向前滚动鼠标滚轮时，这个属性的值是-3的倍数，当向后滚动鼠标滚轮时，这个属性的值是3的倍数
+                return -event.detail * 40;
+            }
+        },
+
+        // 获取键盘事件中的字符ASCII编码
+        getCharCode: function(event) {
+            if (typeof event.charCode == "number") {
+                return event.charCode;
+            } else {
+                return event.keyCode; // IE8及之前版本和Opera
+            }
+        },
+
+        // 获取剪贴板内容
+        getClipboardText: function(event) {
+            var clipboardData = (event.clipboardData || window.clipboardData);
+
+            // clipboardData.getData()用于从剪贴板中取得数据，它接受一个参数，即要取得的数据的格式
+            // 在IE中，有两种数据格式："text"和"URL"
+            // 在Firefox、Safari和Chrome中，这个参数是一种MIME类型；不过，可以用"text"代表"text/plain"
+            return clipboardData.getData("text");
+        },
+
+        // 设置剪切板内容，设置成功返回true
+        setClipboardText: function(event, value) {
+            if (event.clipboardData) {
+                // 由于Safari和Chrome的clipboardData.setData()方法不能识别"text"类型，则这里只能写"text/plain"
+                return event.clipboardData.setData("text/plain", value);
+            } else if (window.clipboardData) {
+                return window.clipboardData.setData("text", value);
             }
         }
-        function fixEvent(event) {
-            if (event) return event;
-            event = window.event;
-            event.pageX = event.clientX + com.$D.getScrollLeft(event.srcElement);
-            event.pageY = event.clientY + com.$D.getScrollTop(event.srcElement);
-            event.target = event.srcElement;
-            event.stopPropagation = stopPropagation;
-            event.preventDefault = preventDefault;
-            var relatedTarget = {
-                "mouseout": event.toElement,
-                "mouseover": event.fromElement
-            }[event.type];
-            if (relatedTarget) {
-                event.relatedTarget = relatedTarget;
-            }
-            return event;
-        }
-        function stopPropagation() {
-            this.cancelBubble = true;
-        }
-        function preventDefault() {
-            this.returnValue = false;
-        }
-        return {
-            "addEvent": addEvent,
-            "removeEvent": removeEvent,
-            "fixEvent": fixEvent
-        };
-    })();
-}());
+    }
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Function
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1187,14 +1217,14 @@
             }
         };
     }());
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Number
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1210,14 +1240,14 @@
             return Math[num < 0 ? "ceil" : "floor"](this);
         }
     };
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Object
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1265,14 +1295,14 @@
             return ins;
         }
     };
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for String
  */
 
-(function(undefined) {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1348,13 +1378,13 @@
             }
         }
     };
-}());
+}(window));
 /**
  * Created by laixiangran on 2016/1/24
  * 主页：http://www.cnblogs.com/laixiangran/
  * for Window
  */
-(function() {
+(function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -1375,10 +1405,10 @@
             var headElement = doc.getElementsByTagName("head")[0];
             var styleElements = headElement.getElementsByTagName("style");
             if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // ie
+                if (!+"\v1") {    // IE
                     doc.createStyleSheet();
                 }else {
-                    var tempStyleElement = doc.createElement("style"); //w3c
+                    var tempStyleElement = doc.createElement("style"); // w3c
                     tempStyleElement.setAttribute("type", "text/css");
                     headElement.appendChild(tempStyleElement);
                 }
@@ -1388,10 +1418,10 @@
             if (media != null && !/screen/.test(media.toLowerCase())) {
                 styleElement.setAttribute("media", "screen");
             }
-            if (!+"\v1") {    // ie
+            if (!+"\v1") {    // IE
                 styleElement.styleSheet.cssText += cssCode;
             }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
+                styleElement.innerHTML += cssCode; // firefox支持直接innerHTML添加样式表字串
             }else{
                 styleElement.appendChild(doc.createTextNode(cssCode))
             }
@@ -1402,7 +1432,6 @@
          * 使用domReady.ready()将执行函数加入队列中
          **/
         domReady: (function() {
-
             // 用于添加要执行的函数
             var domReady = function() {
                 var fnArr = Array.prototype.slice.call(arguments);
@@ -1439,19 +1468,18 @@
             };
 
             // 开始初始化domReady函数，判定页面的加载情况
-            if (document.readyState === "complete") {
+            if (document.readyState == "interactive" || document.readyState == "complete") {
                 domReady.fireReady();
-            } else if (-[1,]) {
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            } else if (!com.$B.engine.ie) {
+                com.$E.addEvent(document, "DOMContentLoaded", function() {
+                    com.$E.removeEvent(document, "DOMContentLoaded", arguments.callee);
                     domReady.fireReady();
-                }, false);
+                });
             } else {
-
-                // 当页面包含图片时，onreadystatechange事件会触发在window.onload之后，
-                // 换言之，它只能正确地执行于页面不包含二进制资源或非常少或者被缓存时
+                // 当页面包含较多或较大的外部资源，readystatechange事件会在load事件触发之前先进入交互阶段，
+                // 而在包含较少或较小的外部资源的页面中，则很难说readystatechange事件会发生在load事件前面
                 document.attachEvent("onreadystatechange", function() {
-                    if (document.readyState == "complete") {
+                    if (document.readyState == "interactive" || document.readyState == "complete") {
                         document.detachEvent("onreadystatechange", arguments.callee);
                         domReady.fireReady();
                     }
@@ -1468,7 +1496,6 @@
                         node.doScroll();
                         node = null; // 防止IE内存泄漏
                     }catch (e) {
-
                         // javascrpt最短时钟间隔为16ms，这里取其倍数
                         setTimeout(arguments.callee, 64);
                         return;
@@ -1522,4 +1549,4 @@
             return func;
         }())
     };
-}());
+}(window));
