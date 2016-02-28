@@ -1,6 +1,6 @@
 /**
  * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * homepage：http://www.cnblogs.com/laixiangran/
  * for Array
  */
 
@@ -52,14 +52,16 @@
         function each(object, callback) {
             if (undefined === object.length) {
                 for (var name in object) {
-                    if (false === callback(object[name], name, object)) {
-                        break;
+                    if (object.hasOwnProperty(name)) {
+                        if (false === callback(object[name], name, object)) {
+                            break;
+                        }
                     }
                 }
             } else {
                 for (var i = 0, len = object.length; i < len; i++) {
                     if (i in object) {
-                        if (false === callback( object[i], i, object )) {
+                        if (false === callback(object[i], i, object)) {
                             break;
                         }
                     }

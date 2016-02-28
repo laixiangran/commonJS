@@ -1,5 +1,7 @@
 /**
  * Created by laixiangran on 2016/1/13.
+ * homepage：http://www.cnblogs.com/laixiangran/
+ * gulpfile.js == gulp config file
  */
 
 var gulp = require("gulp"),
