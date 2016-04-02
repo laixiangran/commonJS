@@ -18,8 +18,10 @@
                 isOverride = true;
             }
             for (var p in source) {
-                if (isOverride || !(p in target)) {
-                    target[p] = source[p];
+                if (source.hasOwnProperty(p)) {
+                    if (isOverride || !(p in target)) {
+                        target[p] = source[p];
+                    }
                 }
             }
             return target;
@@ -28,14 +30,16 @@
         // 深度扩展对象
         deepextend: function(target, source) {
             for (var p in source) {
-                var copy = source[p];
-                if ( target === copy ) {
-                    continue;
-                }
-                if (typeof copy === "object"){
-                    target[p] = arguments.callee(target[p] || {}, copy);
-                }else{
-                    target[p] = copy;
+                if (source.hasOwnProperty(p)) {
+                    var copy = source[p];
+                    if ( target === copy ) {
+                        continue;
+                    }
+                    if (typeof copy === "object"){
+                        target[p] = arguments.callee(target[p] || {}, copy);
+                    }else{
+                        target[p] = copy;
+                    }
                 }
             }
             return target;

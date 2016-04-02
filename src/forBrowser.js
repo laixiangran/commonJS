@@ -115,7 +115,7 @@
         // 检测KHTML 用于Konqueror3.1及更早版本中不包含KHTML的版本，故而就要使用Konqueror的版本来代替
         else if(/KHTML\/(\S+)/.test(ua) || /Konqueror\/(\S+)/.test(ua)){
             engine.ver = browser.ver = RegExp["$1"];
-            engine.khtml = browser.konq = parseFloat(engine.ver);s
+            engine.khtml = browser.konq = parseFloat(engine.ver);
         }
 
         // 检测Gecko 其版本号在字符串"rv:"的后面

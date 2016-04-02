@@ -241,7 +241,7 @@
         },
         "Bounce": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return changeVal - commonJS.tween.Bounce.easeOut(duration-currTime, 0, changeVal, duration) + beginVal;
+                return changeVal - com.Bounce.easeOut(duration-currTime, 0, changeVal, duration) + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
                 if ((currTime /= duration) < (1 / 2.75)) {
@@ -256,9 +256,9 @@
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
                 if (currTime < duration / 2) {
-                    return commonJS.tween.Bounce.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
+                    return com.Bounce.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
                 } else {
-                    return commonJS.tween.Bounce.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
+                    return com.Bounce.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
                 }
             }
         }

@@ -240,7 +240,7 @@
         // 检测KHTML 用于Konqueror3.1及更早版本中不包含KHTML的版本，故而就要使用Konqueror的版本来代替
         else if(/KHTML\/(\S+)/.test(ua) || /Konqueror\/(\S+)/.test(ua)){
             engine.ver = browser.ver = RegExp["$1"];
-            engine.khtml = browser.konq = parseFloat(engine.ver);s
+            engine.khtml = browser.konq = parseFloat(engine.ver);
         }
 
         // 检测Gecko 其版本号在字符串"rv:"的后面
@@ -593,7 +593,7 @@
         },
         "Bounce": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return changeVal - commonJS.tween.Bounce.easeOut(duration-currTime, 0, changeVal, duration) + beginVal;
+                return changeVal - com.Bounce.easeOut(duration-currTime, 0, changeVal, duration) + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
                 if ((currTime /= duration) < (1 / 2.75)) {
@@ -608,9 +608,9 @@
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
                 if (currTime < duration / 2) {
-                    return commonJS.tween.Bounce.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
+                    return com.Bounce.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
                 } else {
-                    return commonJS.tween.Bounce.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
+                    return com.Bounce.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
                 }
             }
         }
@@ -1295,12 +1295,6 @@
                 return function() {
                     return fun.apply(thisp, args.concat(slice.call(arguments)));
                 }
-            },
-            bindAsEventListener: function(fun, thisp) {
-                var args = slice.call(arguments, 2);
-                return function(event) {
-                    return fun.apply(thisp, [window.COM.$E.fixEvent(event)].concat(args));
-                }
             }
         };
     }());
@@ -1348,8 +1342,10 @@
                 isOverride = true;
             }
             for (var p in source) {
-                if (isOverride || !(p in target)) {
-                    target[p] = source[p];
+                if (source.hasOwnProperty(p)) {
+                    if (isOverride || !(p in target)) {
+                        target[p] = source[p];
+                    }
                 }
             }
             return target;
@@ -1358,14 +1354,16 @@
         // 深度扩展对象
         deepextend: function(target, source) {
             for (var p in source) {
-                var copy = source[p];
-                if ( target === copy ) {
-                    continue;
-                }
-                if (typeof copy === "object"){
-                    target[p] = arguments.callee(target[p] || {}, copy);
-                }else{
-                    target[p] = copy;
+                if (source.hasOwnProperty(p)) {
+                    var copy = source[p];
+                    if ( target === copy ) {
+                        continue;
+                    }
+                    if (typeof copy === "object"){
+                        target[p] = arguments.callee(target[p] || {}, copy);
+                    }else{
+                        target[p] = copy;
+                    }
                 }
             }
             return target;
@@ -1606,7 +1604,7 @@
                 func = window[vendors[x] + "RequestAnimationFrame"];
             }
             if (!func) {
-                func = function(callback, element) {
+                func = function(callback) {
                     var currTime = new Date().getTime();
                     var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
                     var id = window.setTimeout(function() {

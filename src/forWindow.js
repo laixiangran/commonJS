@@ -138,7 +138,7 @@
                 func = window[vendors[x] + "RequestAnimationFrame"];
             }
             if (!func) {
-                func = function(callback, element) {
+                func = function(callback) {
                     var currTime = new Date().getTime();
                     var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
                     var id = window.setTimeout(function() {

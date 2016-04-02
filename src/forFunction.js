@@ -16,12 +16,6 @@
                 return function() {
                     return fun.apply(thisp, args.concat(slice.call(arguments)));
                 }
-            },
-            bindAsEventListener: function(fun, thisp) {
-                var args = slice.call(arguments, 2);
-                return function(event) {
-                    return fun.apply(thisp, [window.COM.$E.fixEvent(event)].concat(args));
-                }
             }
         };
     }());
