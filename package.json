@@ -14,9 +14,10 @@
     "url": "https://github.com/laixiangran/commonJS.git"
   },
   "author": {
-    "name": "laixiangran",
+    "name": "赖祥燃",
     "email": "laixiangran@163.com",
-    "url": "http://www.cnblogs.com/laixiangran/"
+    "bolg": "http://www.cnblogs.com/laixiangran",
+    "homepage": "http://www.laixiangran.cn"
   },
   "license": "MIT",
   "devDependencies": {
