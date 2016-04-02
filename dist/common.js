@@ -945,7 +945,7 @@
 
         // 获取元素在窗口可见的范围
         getClientRect: function(elem) {
-            var rect = this.rect(elem),
+            var rect = this.getRect(elem),
                 sLeft = this.getScrollLeft(elem),
                 sTop = this.getScrollTop(elem);
             rect.left -= sLeft;
