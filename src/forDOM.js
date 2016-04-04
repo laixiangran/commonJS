@@ -21,6 +21,33 @@
             return ctx.getElementsByClassName(className);
         },
 
+        // 添加class
+        addClass: function(element, className) {
+            if (element.classList) {
+                element.classList.add(className);
+            } else {
+                var classNames = element.className.split(/\s+/);
+                if (com.$A.indexOf(classNames, className) < 0) {
+                    classNames.push(className);
+                }
+                element.className = classNames.join(" ");
+            }
+        },
+
+        // 删除class
+        removeClass: function(element, className) {
+            if (element.classList) {
+                element.classList.remove(className);
+            } else {
+                var classNames = element.className.split(/\s+/);
+                var index = com.$A.indexOf(classNames, className);
+                if (index >= 0) {
+                    classNames.splice(index, 1);
+                }
+                element.className = classNames.join(" ");
+            }
+        },
+
         // 根据标签名查找
         byTagName: function(tagName, context) {
             var ctx = context || document;

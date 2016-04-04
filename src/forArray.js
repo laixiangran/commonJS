@@ -10,6 +10,7 @@
 
     com.$A = (function() {
         var ret = {
+            // 判断是否为数组
             isArray: function(obj) {
                 if (Array.isArray) {
                     return Array.isArray(obj);
@@ -17,6 +18,8 @@
                     return Object.prototype.toString.call(obj) === "[object Array]";
                 }
             },
+
+            // 从指定位置（未指定则从数组开头）查找项在数组的位置
             indexOf: function(array, item, from) {
                 if (array.indexOf) {
                     return isNaN(from) ? array.indexOf(item) : array.indexOf(item, from);
@@ -32,6 +35,8 @@
                     return -1;
                 }
             },
+
+            // 从指定位置（未指定则从数组末尾）查找项在数组的位置
             lastIndexOf: function(array, item, from) {
                 if (array.lastIndexOf) {
                     return isNaN(from) ? array.lastIndexOf(item) : array.lastIndexOf(item, from);
@@ -70,11 +75,15 @@
         }
 
         each({
+
+            // 对数组中的每一项都执行给定函数，该函数没有返回值
             forEach: function(object, callback, thisp) {
                 each(object, function() {
                     callback.apply(thisp, arguments);
                 });
             },
+
+            // 对数组中的每一项都执行给定函数，返回该函数返回值组成的数组
             map: function(object, callback, thisp) {
                 var arr = [];
                 each(object, function() {
@@ -82,6 +91,8 @@
                 });
                 return arr;
             },
+
+            // 对数组中的每一项都执行给定函数，返回该函数会返回true的项组成的数组
             filter: function(object, callback, thisp) {
                 var arr = [];
                 each(object, function(item) {
@@ -89,6 +100,8 @@
                 });
                 return arr;
             },
+
+            // 对数组中的每一项都执行给定函数，如果该函数对每一项都返回true，则返回true
             every: function(object, callback, thisp) {
                 var flag = true;
                 each(object, function() {
@@ -99,6 +112,8 @@
                 });
                 return flag;
             },
+
+            // 对数组中的每一项都执行给定函数，如果该函数对任一项都返回true，则返回true
             some: function(object, callback, thisp) {
                 var flag = false;
                 each(object, function() {
