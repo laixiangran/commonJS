@@ -781,35 +781,58 @@
 
         // 添加class
         addClass: function(element, className) {
-            if (element.classList) {
-                element.classList.add(className);
-            } else {
-                var classNames = element.className.split(/\s+/);
-                if (com.$A.indexOf(classNames, className) < 0) {
-                    classNames.push(className);
-                }
-                element.className = classNames.join(" ");
+            if (!com.$A.isArray(className)) {
+                className = [className.toString()]
             }
+            com.$A.forEach(className, function(c) {
+                if (element.classList) {
+                    element.classList.add(c);
+                } else {
+                    var classNames = element.className.split(/\s+/);
+                    if (com.$A.indexOf(classNames, c) < 0) {
+                        classNames.push(c);
+                    }
+                    element.className = classNames.join(" ");
+                }
+            });
         },
 
         // 删除class
         removeClass: function(element, className) {
-            if (element.classList) {
-                element.classList.remove(className);
-            } else {
-                var classNames = element.className.split(/\s+/);
-                var index = com.$A.indexOf(classNames, className);
-                if (index >= 0) {
-                    classNames.splice(index, 1);
-                }
-                element.className = classNames.join(" ");
+            if (!com.$A.isArray(className)) {
+                className = [className.toString()]
             }
+            com.$A.forEach(className, function(c) {
+                if (element.classList) {
+                    element.classList.remove(c);
+                } else {
+                    var classNames = element.className.split(/\s+/);
+                    var index = com.$A.indexOf(classNames, c);
+                    if (index >= 0) {
+                        classNames.splice(index, 1);
+                    }
+                    element.className = classNames.join(" ");
+                }
+            });
         },
 
         // 根据标签名查找
         byTagName: function(tagName, context) {
             var ctx = context || document;
             return ctx.getElementsByTagName(tagName);
+        },
+
+        // 添加内容
+        append: function(parentElem, node) {
+            if (typeof node == "string") {
+                var div = document.createElement("div");
+                div.innerHTML = node;
+                node = div.childNodes[0];
+                parentElem.appendChild(node);
+            } else if (node.nodeType) {
+                parentElem.appendChild(node);
+            }
+            return node;
         },
 
         // 在文档中添加样式
