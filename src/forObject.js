@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Object
  */
 
@@ -9,10 +9,20 @@
     var com = window.COM = window.COM || {};
 
     com.$O = {
-        // 空函数
+        /**
+         * @author laixiangran@163.com
+         * @description 空函数
+         */
         noop: function() {},
 
-        // 扩展对象
+        /**
+         * @author laixiangran@163.com
+         * @description 扩展对象
+         * @param {Object} target 扩展对象
+         * @param {Object} source 原始对象
+         * @param {Boolean} isOverride 是否覆盖相同属性的值
+         * @return {Object}
+         */
         extend: function (target, source, isOverride) {
             if (isOverride === undefined) {
                 isOverride = true;
@@ -27,7 +37,13 @@
             return target;
         },
 
-        // 深度扩展对象
+        /**
+         * @author laixiangran@163.com
+         * @description 深度扩展对象，不能用在严格模式下
+         * @param {Object} target 扩展对象
+         * @param {Object} source 原始对象
+         * @return {Object}
+         */
         deepextend: function(target, source) {
             for (var p in source) {
                 if (source.hasOwnProperty(p)) {
@@ -45,7 +61,13 @@
             return target;
         },
 
-        // 包装对象
+        /**
+         * @author laixiangran@163.com
+         * @description 包装对象
+         * @param {Object} self 子对象
+         * @param {Object} parent 继承对象
+         * @return {Object}
+         */
         wrapper: function(self, parent) {
             var ins = function() {
                 self.apply(this, arguments);

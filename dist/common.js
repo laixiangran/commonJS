@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Array
  */
 
@@ -10,7 +10,12 @@
 
     com.$A = (function() {
         var ret = {
-            // 判断是否为数组
+            /**
+             * @author laixiangran@163.com
+             * @description 判断是否为数组
+             * @param {Object} obj
+             * @return {Boolean}
+             */
             isArray: function(obj) {
                 if (Array.isArray) {
                     return Array.isArray(obj);
@@ -19,7 +24,14 @@
                 }
             },
 
-            // 从指定位置（未指定则从数组开头）查找项在数组的位置
+            /**
+             * @author laixiangran@163.com
+             * @description 从指定位置（未指定则从数组开头）查找项在数组的位置
+             * @param {Array} array 数组
+             * @param {Object} item 查找项
+             * @param {Number} from 开始查找的位置
+             * @return {Number}
+             */
             indexOf: function(array, item, from) {
                 if (array.indexOf) {
                     return isNaN(from) ? array.indexOf(item) : array.indexOf(item, from);
@@ -36,7 +48,14 @@
                 }
             },
 
-            // 从指定位置（未指定则从数组末尾）查找项在数组的位置
+            /**
+             * @author laixiangran@163.com
+             * @description 从指定位置（未指定则从数组末尾）查找项在数组的位置
+             * @param {Array} array 数组
+             * @param {Object} item 查找项
+             * @param {Number} from 开始查找的位置
+             * @return {Number}
+             */
             lastIndexOf: function(array, item, from) {
                 if (array.lastIndexOf) {
                     return isNaN(from) ? array.lastIndexOf(item) : array.lastIndexOf(item, from);
@@ -76,14 +95,27 @@
 
         each({
 
-            // 对数组中的每一项都执行给定函数，该函数没有返回值
+            /**
+             * @author laixiangran@163.com
+             * @description 对数组中的每一项都执行给定函数，该函数没有返回值
+             * @param {Array,Object} object
+             * @param {Function} callback
+             * @param {Object} thisp
+             */
             forEach: function(object, callback, thisp) {
                 each(object, function() {
                     callback.apply(thisp, arguments);
                 });
             },
 
-            // 对数组中的每一项都执行给定函数，返回该函数返回值组成的数组
+            /**
+             * @author laixiangran@163.com
+             * @description 对数组中的每一项都执行给定函数，返回该函数返回值组成的数组
+             * @param {Array,Object} object
+             * @param {Function} callback
+             * @param {Object} thisp
+             * @return {Array}
+             */
             map: function(object, callback, thisp) {
                 var arr = [];
                 each(object, function() {
@@ -92,7 +124,14 @@
                 return arr;
             },
 
-            // 对数组中的每一项都执行给定函数，返回该函数会返回true的项组成的数组
+            /**
+             * @author laixiangran@163.com
+             * @description 对数组中的每一项都执行给定函数，返回该函数会返回true的项组成的数组
+             * @param {Array,Object} object
+             * @param {Function} callback
+             * @param {Object} thisp
+             * @return {Array}
+             */
             filter: function(object, callback, thisp) {
                 var arr = [];
                 each(object, function(item) {
@@ -101,7 +140,14 @@
                 return arr;
             },
 
-            // 对数组中的每一项都执行给定函数，如果该函数对每一项都返回true，则返回true
+            /**
+             * @author laixiangran@163.com
+             * @description 对数组中的每一项都执行给定函数，如果该函数对每一项都返回true，则返回true
+             * @param {Array,Object} object
+             * @param {Function} callback
+             * @param {Object} thisp
+             * @return {Boolean}
+             */
             every: function(object, callback, thisp) {
                 var flag = true;
                 each(object, function() {
@@ -113,7 +159,14 @@
                 return flag;
             },
 
-            // 对数组中的每一项都执行给定函数，如果该函数对任一项都返回true，则返回true
+            /**
+             * @author laixiangran@163.com
+             * @description 对数组中的每一项都执行给定函数，如果该函数对任一项都返回true，则返回true
+             * @param {Array,Object} object
+             * @param {Function} callback
+             * @param {Object} thisp
+             * @return {Boolean}
+             */
             some: function(object, callback, thisp) {
                 var flag = false;
                 each(object, function() {
@@ -139,8 +192,8 @@
 }(window));
 
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Browser
  */
 
@@ -366,17 +419,19 @@
     }());
 }(window));
 /**
- * Created by laixiangran on 2016/1/25.
- * homepage: http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/25.
+ * homepage: http://www.laixiangran.cn
  * for COM（命名空间）
  */
 (function(window, undefined) {
 
     var com = window.COM = window.COM || {};
 
-    /*
-    * 产生唯一ID
-    * */
+    /**
+     * @author laixiangran@163.com
+     * @description 产生唯一ID
+     * @return {String}
+     */
     com.buildGuid = function() {
         function guid() {
             return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -384,11 +439,13 @@
         return (guid()+guid()+"-"+guid()+"-"+guid()+"-"+guid()+"-"+guid()+guid()+guid());
     };
 
-    /*
-    * 取得数据的类型（一个参数时）或判定数据的类型(两个参数时)
-    * @param obj 数据
-    * @param str 用于判断的数据类型
-    * */
+    /**
+     * @author laixiangran@163.com
+     * @description 取得数据的类型（一个参数时）或判定数据的类型(两个参数时)
+     * @param {Object} obj
+     * @param {String} str 判断的类型
+     * @return {String || Boolean}
+     */
     com.getOrIsType = (function() {
         var reg = /^(\w)/,
             regFn = function($, $1) {
@@ -438,42 +495,45 @@
     })();
 
     /**
-     * Tween介绍：
-     * Linear：无缓动效果
-     * Quadratic：二次方的缓动（t^2）
-     * Cubic：三次方的缓动（t^3）
-     * Quartic：四次方的缓动（t^4）
-     * Quintic：五次方的缓动（t^5）
-     * Sinusoidal：正弦曲线的缓动（sin(t)）
-     * Exponential：指数曲线的缓动（2^t）
-     * Circular：圆形曲线的缓动（sqrt(1-t^2)）
-     * Elastic：指数衰减的正弦曲线缓动
-     * Back：超过范围的三次方缓动（(s+1)*t^3 – s*t^2）
-     * Bounce：指数衰减的反弹缓动
-     * 每个效果都分三个缓动方式，分别是（可采用后面的邪恶记忆法帮助记忆）：
-     * easeIn：从0开始加速的缓动；
-     * easeOut：减速到0的缓动；
-     * easeInOut：前半段从0开始加速，后半段减速到0的缓动。
-     *
-     * @param currTime: current time（当前时间）
-     * @param beginVal: beginning value（初始值）
-     * @param changeVal: change in value（变化量）
-     * @param duration: duration（持续时间）
+     * @author laixiangran@163.com
+     * @description Tween介绍：
+     * @description Linear：无缓动效果
+     * @description Quadratic：二次方的缓动（t^2）
+     * @description Cubic：三次方的缓动（t^3）
+     * @description Quartic：四次方的缓动（t^4）
+     * @description Quintic：五次方的缓动（t^5）
+     * @description Sinusoidal：正弦曲线的缓动（sin(t)）
+     * @description Exponential：指数曲线的缓动（2^t）
+     * @description Circular：圆形曲线的缓动（sqrt(1-t^2)）
+     * @description Elastic：指数衰减的正弦曲线缓动
+     * @description Back：超过范围的三次方缓动（(s+1)*t^3 – s*t^2）
+     * @description Bounce：指数衰减的反弹缓动
+     * @description 每个效果都分三个缓动方式，分别是：
+     * @description easeIn：从0开始加速的缓动；
+     * @description easeOut：减速到0的缓动；
+     * @description easeInOut：前半段从0开始加速，后半段减速到0的缓动。
+     * @param {Date} currTime: current time（当前时间）
+     * @param {Number} beginVal: beginning value（初始值）
+     * @param {Number} changeVal: change in value（变化量）
+     * @param {Date} duration: duration（持续时间）
+     * @return {Number}
      */
     com.tween = {
         "Linear": function(currTime, beginVal, changeVal, duration) {
-            return changeVal*currTime/duration + beginVal;
+            return changeVal * currTime / duration + beginVal;
         },
         "Quad": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
                 return changeVal * (currTime /= duration) * currTime + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
-                return -changeVal *(currTime /= duration)*(currTime-2) + beginVal;
+                return -changeVal * (currTime /= duration) * (currTime - 2) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * currTime * currTime + beginVal;
-                return -changeVal / 2 * ((--currTime) * (currTime-2) - 1) + beginVal;
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * currTime * currTime + beginVal;
+                }
+                return -changeVal / 2 * ((--currTime) * (currTime - 2) - 1) + beginVal;
             }
         },
         "Cubic": {
@@ -484,20 +544,24 @@
                 return changeVal * ((currTime = currTime/duration - 1) * currTime * currTime + 1) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * currTime * currTime*currTime + beginVal;
-                return changeVal / 2*((currTime -= 2) * currTime * currTime + 2) + beginVal;
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * currTime * currTime * currTime + beginVal;
+                }
+                return changeVal / 2 * ((currTime -= 2) * currTime * currTime + 2) + beginVal;
             }
         },
         "Quart": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return changeVal * (currTime /= duration) * currTime * currTime*currTime + beginVal;
+                return changeVal * (currTime /= duration) * currTime * currTime * currTime + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
-                return -changeVal * ((currTime = currTime/duration - 1) * currTime * currTime*currTime - 1) + beginVal;
+                return -changeVal * ((currTime = currTime/duration - 1) * currTime * currTime * currTime - 1) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * currTime * currTime * currTime * currTime + beginVal;
-                return -changeVal / 2 * ((currTime -= 2) * currTime * currTime*currTime - 2) + beginVal;
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * currTime * currTime * currTime * currTime + beginVal;
+                }
+                return -changeVal / 2 * ((currTime -= 2) * currTime * currTime * currTime - 2) + beginVal;
             }
         },
         "Quint": {
@@ -508,32 +572,40 @@
                 return changeVal * ((currTime = currTime/duration - 1) * currTime * currTime * currTime * currTime + 1) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * currTime * currTime * currTime * currTime * currTime + beginVal;
-                return changeVal / 2*((currTime -= 2) * currTime * currTime * currTime * currTime + 2) + beginVal;
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * currTime * currTime * currTime * currTime * currTime + beginVal;
+                }
+                return changeVal / 2 * ((currTime -= 2) * currTime * currTime * currTime * currTime + 2) + beginVal;
             }
         },
         "Sine": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return -changeVal * Math.cos(currTime/duration * (Math.PI/2)) + changeVal + beginVal;
+                return -changeVal * Math.cos(currTime / duration * (Math.PI / 2)) + changeVal + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
-                return changeVal * Math.sin(currTime/duration * (Math.PI/2)) + beginVal;
+                return changeVal * Math.sin(currTime / duration * (Math.PI / 2)) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                return -changeVal / 2 * (Math.cos(Math.PI * currTime/duration) - 1) + beginVal;
+                return -changeVal / 2 * (Math.cos(Math.PI * currTime / duration) - 1) + beginVal;
             }
         },
         "Expo": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return (currTime==0) ? beginVal : changeVal * Math.pow(2, 10 * (currTime/duration - 1)) + beginVal;
+                return (currTime == 0) ? beginVal : changeVal * Math.pow(2, 10 * (currTime / duration - 1)) + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
-                return (currTime==duration) ? beginVal + changeVal : changeVal * (-Math.pow(2, -10 * currTime/duration) + 1) + beginVal;
+                return (currTime == duration) ? beginVal + changeVal : changeVal * (-Math.pow(2, -10 * currTime / duration) + 1) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if (currTime==0) return beginVal;
-                if (currTime==duration) return beginVal+changeVal;
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * Math.pow(2, 10 * (currTime - 1)) + beginVal;
+                if (currTime == 0) {
+                    return beginVal;
+                }
+                if (currTime == duration) {
+                    return beginVal+changeVal;
+                }
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * Math.pow(2, 10 * (currTime - 1)) + beginVal;
+                }
                 return changeVal / 2 * (-Math.pow(2, -10 * --currTime) + 2) + beginVal;
             }
         },
@@ -545,16 +617,24 @@
                 return changeVal * Math.sqrt(1 - (currTime = currTime/duration - 1) * currTime) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
-                if ((currTime /= duration / 2) < 1) return -changeVal / 2 * (Math.sqrt(1 - currTime * currTime) - 1) + beginVal;
+                if ((currTime /= duration / 2) < 1) {
+                    return -changeVal / 2 * (Math.sqrt(1 - currTime * currTime) - 1) + beginVal;
+                }
                 return changeVal / 2 * (Math.sqrt(1 - (currTime -= 2) * currTime) + 1) + beginVal;
             }
         },
         "Elastic": {
             easeIn: function(currTime, beginVal, changeVal, duration, a, p) {
                 var s;
-                if (currTime==0) return beginVal;
-                if ((currTime /= duration) == 1) return beginVal + changeVal;
-                if (typeof p == "undefined") p = duration * .3;
+                if (currTime == 0) {
+                    return beginVal;
+                }
+                if ((currTime /= duration) == 1) {
+                    return beginVal + changeVal;
+                }
+                if (typeof p == "undefined") {
+                    p = duration * .3;
+                }
                 if (!a || a < Math.abs(changeVal)) {
                     s = p / 4;
                     a = changeVal;
@@ -565,67 +645,89 @@
             },
             easeOut: function(currTime, beginVal, changeVal, duration, a, p) {
                 var s;
-                if (currTime==0) return beginVal;
-                if ((currTime /= duration) == 1) return beginVal + changeVal;
-                if (typeof p == "undefined") p = duration * .3;
+                if (currTime == 0) {
+                    return beginVal;
+                }
+                if ((currTime /= duration) == 1) {
+                    return beginVal + changeVal;
+                }
+                if (typeof p == "undefined") {
+                    p = duration * .3;
+                }
                 if (!a || a < Math.abs(changeVal)) {
                     a = changeVal;
                     s = p / 4;
                 } else {
-                    s = p/(2*Math.PI) * Math.asin(changeVal/a);
+                    s = p/(2*Math.PI) * Math.asin(changeVal / a);
                 }
                 return (a * Math.pow(2, -10 * currTime) * Math.sin((currTime * duration - s) * (2 * Math.PI) / p) + changeVal + beginVal);
             },
             easeInOut: function(currTime, beginVal, changeVal, duration, a, p) {
                 var s;
-                if (currTime==0) return beginVal;
-                if ((currTime /= duration / 2) == 2) return beginVal+changeVal;
-                if (typeof p == "undefined") p = duration * (.3 * 1.5);
+                if (currTime == 0) {
+                    return beginVal;
+                }
+                if ((currTime /= duration / 2) == 2) {
+                    return beginVal + changeVal;
+                }
+                if (typeof p == "undefined") {
+                    p = duration * (.3 * 1.5);
+                }
                 if (!a || a < Math.abs(changeVal)) {
                     a = changeVal;
                     s = p / 4;
                 } else {
                     s = p / (2  *Math.PI) * Math.asin(changeVal / a);
                 }
-                if (currTime < 1) return -.5 * (a * Math.pow(2, 10* (currTime -=1 )) * Math.sin((currTime * duration - s) * (2 * Math.PI) / p)) + beginVal;
-                return a * Math.pow(2, -10 * (currTime -= 1)) * Math.sin((currTime * duration - s) * (2 * Math.PI) / p ) * .5 + changeVal + beginVal;
+                if (currTime < 1) {
+                    return -0.5 * (a * Math.pow(2, 10 * (currTime -=1 )) * Math.sin((currTime * duration - s) * (2 * Math.PI) / p)) + beginVal;
+                }
+                return a * Math.pow(2, -10 * (currTime -= 1)) * Math.sin((currTime * duration - s) * (2 * Math.PI) / p ) * 0.5 + changeVal + beginVal;
             }
         },
         "Back": {
             easeIn: function(currTime, beginVal, changeVal, duration, s) {
-                if (typeof s == "undefined") s = 1.70158;
+                if (typeof s == "undefined") {
+                    s = 1.70158;
+                }
                 return changeVal * (currTime /= duration) * currTime * ((s + 1) * currTime - s) + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration, s) {
-                if (typeof s == "undefined") s = 1.70158;
+                if (typeof s == "undefined") {
+                    s = 1.70158;
+                }
                 return changeVal * ((currTime = currTime/duration - 1) * currTime * ((s + 1) * currTime + s) + 1) + beginVal;
             },
             easeInOut: function(currTime, beginVal, changeVal, duration, s) {
-                if (typeof s == "undefined") s = 1.70158;
-                if ((currTime /= duration / 2) < 1) return changeVal / 2 * (currTime * currTime * (((s *= (1.525)) + 1) * currTime - s)) + beginVal;
+                if (typeof s == "undefined") {
+                    s = 1.70158;
+                }
+                if ((currTime /= duration / 2) < 1) {
+                    return changeVal / 2 * (currTime * currTime * (((s *= (1.525)) + 1) * currTime - s)) + beginVal;
+                }
                 return changeVal / 2*((currTime -= 2) * currTime * (((s *= (1.525)) + 1) * currTime + s) + 2) + beginVal;
             }
         },
         "Bounce": {
             easeIn: function(currTime, beginVal, changeVal, duration) {
-                return changeVal - com.Bounce.easeOut(duration-currTime, 0, changeVal, duration) + beginVal;
+                return changeVal - this.easeOut(duration - currTime, 0, changeVal, duration) + beginVal;
             },
             easeOut: function(currTime, beginVal, changeVal, duration) {
                 if ((currTime /= duration) < (1 / 2.75)) {
                     return changeVal * (7.5625 * currTime * currTime) + beginVal;
                 } else if (currTime < (2 / 2.75)) {
-                    return changeVal * (7.5625 * (currTime -= (1.5 / 2.75)) * currTime + .75) + beginVal;
+                    return changeVal * (7.5625 * (currTime -= (1.5 / 2.75)) * currTime + 0.75) + beginVal;
                 } else if (currTime < (2.5 / 2.75)) {
-                    return changeVal * (7.5625 * (currTime -= (2.25 / 2.75)) * currTime + .9375) + beginVal;
+                    return changeVal * (7.5625 * (currTime -= (2.25 / 2.75)) * currTime + 0.9375) + beginVal;
                 } else {
-                    return changeVal * (7.5625 * (currTime -= (2.625 / 2.75)) * currTime + .984375) + beginVal;
+                    return changeVal * (7.5625 * (currTime -= (2.625 / 2.75)) * currTime + 0.984375) + beginVal;
                 }
             },
             easeInOut: function(currTime, beginVal, changeVal, duration) {
                 if (currTime < duration / 2) {
-                    return com.Bounce.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
+                    return this.easeIn(currTime * 2, 0, changeVal, duration) * .5 + beginVal;
                 } else {
-                    return com.Bounce.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
+                    return this.easeOut(currTime * 2 - duration, 0, changeVal, duration) * .5 + changeVal * .5 + beginVal;
                 }
             }
         }
@@ -633,8 +735,8 @@
 
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage: http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage: http://www.laixiangran.cn
  * for CustomEvent
  */
 
@@ -645,34 +747,39 @@
     com.$CE = (function() {
         var guid = 1;
         return {
-            /*
-            * 注册事件
-            * @param object(Object) 绑定事件的对象
-            * @param type(String) 事件类型
-            * @param handler(Function) 事件处理函数
-            * */
+            /**
+             * @author laixiangran@163.com
+             * @description 注册事件
+             * @param {Object} object 绑定事件的对象
+             * @param {String} type 事件类型
+             * @param {Function} handler 事件处理函数
+             */
             addEvent: function(object, type, handler) {
                 if (!handler.$$$guid) handler.$$$guid = guid++;
                 if (!object.cusevents) object.cusevents = {};
                 if (!object.cusevents[type]) object.cusevents[type] = {};
                 object.cusevents[type][handler.$$$guid] = handler;
             },
-            /*
-             * 取消注册的事件
-             * @param object(Object) 绑定事件的对象
-             * @param type(String) 事件类型
-             * @param handler(Function) 事件处理函数
-             * */
+
+            /**
+             * @author laixiangran@163.com
+             * @description 取消注册的事件
+             * @param {Object} object 绑定事件的对象
+             * @param {String} type 事件类型
+             * @param {Function} handler 事件处理函数
+             */
             removeEvent: function(object, type, handler) {
                 if (object.cusevents && object.cusevents[type]) {
                     delete object.cusevents[type][handler.$$$guid];
                 }
             },
-            /*
-             * 触发事件
-             * @param object(Object) 绑定事件的对象
-             * @param type(String) 事件类型
-             * */
+
+            /**
+             * @author laixiangran@163.com
+             * @description 触发事件
+             * @param {Object} object 绑定事件的对象
+             * @param {String} typ
+             */
             fireEvent: function(object, type) {
                 if (!object.cusevents) return;
                 var args = Array.prototype.slice.call(arguments, 2),
@@ -683,10 +790,12 @@
                     }
                 }
             },
-            /*
-             * 清除所有绑定的事件
-             * @param object(Object) 绑定事件的对象
-             * */
+
+            /**
+             * @author laixiangran@163.com
+             * @description 清除所有绑定的事件
+             * @param {Object} object 绑定事件的对象
+             */
             clearEvent: function(object) {
                 if (!object.cusevents) return;
                 for (var type in object.cusevents) {
@@ -706,8 +815,8 @@
     }());
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Date
  */
 
@@ -717,7 +826,12 @@
 
     com.$DE = {
 
-        // 求当前日期与传入的日期相隔多少天
+        /**
+         * @author laixiangran@163.com
+         * @description 求当前日期与传入的日期相隔多少天
+         * @param {Date} date 当前日期
+         * @return {Number}
+         */
         getDateInterval: function(date) {
             var d = new Date(date);
             if (d == "Invalid Date") {
@@ -728,27 +842,53 @@
             }
         },
 
-        // 求当前日期所在月的第一天
+        /**
+         * @author laixiangran@163.com
+         * @description 求当前日期所在月的第一天
+         * @param {Date} date 当前日期
+         * @return {Date}
+         */
         getFirstDateInMonth: function(date) {
             return new Date(date.getFullYear(), date.getMonth(), 1);
         },
 
-        // 求当前日期所在月的最后一天
+        /**
+         * @author laixiangran@163.com
+         * @description 求当前日期所在月的最后一天
+         * @param {Date} date 当前日期
+         * @return {Date}
+         */
         getLastDateInMonth: function(date) {
             return new Date(date.getFullYear(), date.getMonth()+1, 0);
         },
 
-        // 求当前日期所在季度的第一天
+        /**
+         * @author laixiangran@163.com
+         * @description 求当前日期所在季度的第一天
+         * @param {Date} date 当前日期
+         * @return {Date}
+         */
         getFirstDateInQuarter: function(date) {
             return new Date(date.getFullYear(), Math.floor(date.getMonth()/3)*3, 1);
         },
 
-        // 判断是否为闰年
+        /**
+         * @author laixiangran@163.com
+         * @description 判断是否为闰年
+         * @param {Date} date 当前日期
+         * @return {Date}
+         */
         isLeapYear: function(date) {
             return new Date(date.getFullYear(), 2, 0).getDate() == 29;
         },
 
-        // 求某年某月的天数
+        /**
+         * @author laixiangran@163.com
+         * @description 求某年某月的天数
+         * @param {Number} year 年
+         * @param {Number} month 月
+         * @return {Number}
+         */
         daysInMonth: function(year, month) {
             var d = new Date();
             d.setFullYear(year, (month == 12) ? 1 : month, 0);
@@ -757,8 +897,8 @@
     };
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for DOM
  */
 
@@ -767,19 +907,48 @@
     var com = window.COM = window.COM || {};
 
     com.$D = {
-        // 根据id查找
+        /**
+         * @author laixiangran@163.com
+         * @description 根据id查找元素
+         * @param {String} id 元素id
+         * @param {Element} context 查找的范围元素
+         * @return {Element}
+         */
         byId: function(id, context) {
             var ctx = context || document;
             return ctx.getElementById(id);
         },
 
-        // 根据类名查找
+        /**
+         * @author laixiangran@163.com
+         * @description 根据类名查找元素
+         * @param {String} className 元素类名
+         * @param {Element} context 查找的范围元素
+         * @return {HTMLCollection}
+         */
         byClassName: function(className, context) {
             var ctx = context || document;
             return ctx.getElementsByClassName(className);
         },
 
-        // 添加class
+        /**
+         * @author laixiangran@163.com
+         * @description 根据标签名查找
+         * @param {String} tagName 元素名
+         * @param {Element} context 查找的范围元素
+         * @return {HTMLCollection}
+         */
+        byTagName: function(tagName, context) {
+            var ctx = context || document;
+            return ctx.getElementsByTagName(tagName);
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 元素添加class
+         * @param {Element} element 元素
+         * @param {*} className 添加的类，可以单个添加也可多个一起添加
+         */
         addClass: function(element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
@@ -797,7 +966,12 @@
             });
         },
 
-        // 删除class
+        /**
+         * @author laixiangran@163.com
+         * @description 元素删除class
+         * @param {Element} element 元素
+         * @param {*} className 删除的类，可以单个添加也可多个一起添加
+         */
         removeClass: function(element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
@@ -816,13 +990,12 @@
             });
         },
 
-        // 根据标签名查找
-        byTagName: function(tagName, context) {
-            var ctx = context || document;
-            return ctx.getElementsByTagName(tagName);
-        },
-
-        // 添加内容
+        /**
+         * @author laixiangran@163.com
+         * @description 元素插入子节点
+         * @param {Element} parentElem 父元素
+         * @param {String,Node} node 插入的节点
+         */
         append: function(parentElem, node) {
             if (typeof node == "string") {
                 var div = document.createElement("div");
@@ -835,48 +1008,12 @@
             return node;
         },
 
-        // 在文档中添加样式
-        addSheet: function() {
-            var doc, cssCode;
-            if (arguments.length == 1) {
-                doc = document;
-                cssCode = arguments[0];
-            }else if (arguments.length == 2) {
-                doc = arguments[0];
-                cssCode = arguments[1];
-            }else {
-                alert("addSheet函数最多接受两个参数!");
-            }
-            var headElement = doc.getElementsByTagName("head")[0];
-            var styleElements = headElement.getElementsByTagName("style");
-            if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // ie
-                    doc.createStyleSheet();
-                }else {
-                    var tempStyleElement = doc.createElement("style"); //w3c
-                    tempStyleElement.setAttribute("type", "text/css");
-                    headElement.appendChild(tempStyleElement);
-                }
-            }
-            var  styleElement = styleElements[0];
-            var media = styleElement.getAttribute("media");
-            if (media != null && !/screen/.test(media.toLowerCase())) {
-                styleElement.setAttribute("media", "screen");
-            }
-            if (!+"\v1") {    // ie
-                styleElement.styleSheet.cssText += cssCode;
-            }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
-            }else{
-                styleElement.appendChild(doc.createTextNode(cssCode))
-            }
-        },
-
-        /*
-         * iframe高度自适应
-         * @param id iframe的id
-         * @param endTime 计算的时间
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description iframe高度自适应
+         * @param {String} id iframe的id
+         * @param {Number} endTime 计算的时间
+         */
         adjustIframe: function(id, endTime) {
             var iframe = this.byId(id),
                 time = 0,
@@ -896,11 +1033,12 @@
             }
         },
 
-        /*
-         * 拖拽元素
-         * @param elem 拖拽的元素
-         * @param callback 拖拽结束之后的回调函数
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 拖拽元素
+         * @param {Element} elem 拖拽的元素
+         * @param {Function} callback 拖拽结束之后的回调函数
+         */
         drag: function(elem, callback) {
             callback = callback || function() {};
             var $D = this;
@@ -946,19 +1084,34 @@
             };
         },
 
-        // 获取元素被窗口卷去的上部分高度
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素被窗口卷去的上部分高度
+         * @param {Element} elem
+         * @return {Number}
+         */
         getScrollTop: function(elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
         },
 
-        // 获取元素被窗口卷去的左部分宽度
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素被窗口卷去的左部分宽度
+         * @param {Element} elem
+         * @return {Number}
+         */
         getScrollLeft: function(elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollLeft || doc.body.scrollLeft;
         },
 
-        // 获取元素的左偏移量
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的左偏移量
+         * @param {Element} elem
+         * @return {Number}
+         */
         getElementLeft: function(elem) {
             var actualLeft = elem.offsetLeft;
             var current = elem.offsetParent;
@@ -969,7 +1122,12 @@
             return actualLeft;
         },
 
-        // 获取元素的上偏移量
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的上偏移量
+         * @param {Element} elem
+         * @return {Number}
+         */
         getElementTop: function(elem) {
             var actualTop = elem.offsetTop;
             var current = elem.offsetParent;
@@ -980,7 +1138,12 @@
             return actualTop;
         },
 
-        // 获取元素的范围（包括窗口不可见的部分）
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的范围（包括窗口不可见的部分）
+         * @param {Element} elem
+         * @return {Object}
+         */
         getRect: function(elem) {
             var left = 0,
                 top = 0,
@@ -1008,7 +1171,12 @@
             };
         },
 
-        // 获取元素在窗口可见的范围
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素在窗口可见的范围
+         * @param {Element} elem
+         * @return {Object}
+         */
         getClientRect: function(elem) {
             var rect = this.getRect(elem),
                 sLeft = this.getScrollLeft(elem),
@@ -1020,7 +1188,11 @@
             return rect;
         },
 
-        // 获取浏览器视口大小
+        /**
+         * @author laixiangran@163.com
+         * @description 获取浏览器视口大小
+         * @return {Object}
+         */
         getViewport: function() {
             if (document.compatMode == "BackCompat") { // 判断是否运行在混杂模式
                 return {
@@ -1035,11 +1207,13 @@
             }
         },
 
-        /*
-         * 元素是否包含某元素
-         * @parma elemA 包含元素
-         * @param elemB 被包含元素
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 元素是否包含某元素
+         * @parma {Element} elemA 包含元素
+         * @param {Element} elemB 被包含元素
+         * @return {Boolean}
+         */
         contains: function(elemA, elemB) {
             if (typeof elemA.contains == "function" && (!COM.$B.engine.webkit || COM.$B.engine.webkit >= 522)) {
                 return elemA.contains(elemB);
@@ -1058,7 +1232,12 @@
             }
         },
 
-        // 获取所有css属性
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素所有css属性
+         * @parma {Element} elem
+         * @return {CSSStyleDeclaration}
+         */
         getCurStyle: function(elem) {
             if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
                 return document.defaultView.getComputedStyle(elem, null);
@@ -1067,11 +1246,13 @@
             }
         },
 
-        /*
-        * 获取元素指定的css属性的值
-        * @param elem 当前元素
-        * @parma name css属性名
-        * */
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素指定的css属性的值
+         * @param {Element} elem 当前元素
+         * @parma {String} name css属性名
+         * @return {*}
+         */
         getStyle: function(elem, name) {
             var style = null;
             if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
@@ -1108,12 +1289,13 @@
             }
         },
 
-        /*
-         * 设置元素指定的css属性的值
-         * @param elem 当前元素
-         * @parma style css属性名
-         * @param value css属性的指
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 设置元素指定的css属性的值
+         * @param {Array,Element} elems 设置的元素
+         * @parma {String,Object} style css属性名
+         * @param {*} value css属性的指（可选）
+         */
         setStyle: function(elems, style, value) {
             if (!elems.length) {
                 elems = [elems];
@@ -1139,7 +1321,12 @@
             });
         },
 
-        // 获取元素大小
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素大小
+         * @param {Element} elem
+         * @return {Object}
+         */
         getSize: function(elem) {
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
@@ -1179,7 +1366,13 @@
             };
         },
 
-        // 选择文本框中的文本
+        /**
+         * @author laixiangran@163.com
+         * @description 选择文本框中的文本
+         * @param {Element} textbox 文本框
+         * @param {Number} startIndex 开始点
+         * @param {Number} stopIndex 结束点
+         */
         selectText: function(textbox, startIndex, stopIndex) {
             if (textbox.setSelectionRange) {
                 textbox.setSelectionRange(startIndex, stopIndex);
@@ -1193,7 +1386,12 @@
             textbox.focus();
         },
 
-        // 获取文本框中选择的文本
+        /**
+         * @author laixiangran@163.com
+         * @description 获取文本框中选择的文本
+         * @param {Element} textbox 文本框
+         * @return {String}
+         */
         getSelectedText: function(textbox) {
             if (typeof textbox.selectionStart == "number") {
                 return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
@@ -1206,8 +1404,8 @@
     };
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * 主页：http://www.laixiangran.cn
  * for Event
  */
 (function(window, undefined) {
@@ -1215,7 +1413,13 @@
     var com = window.COM = window.COM || {};
 
     com.$E = {
-        // 添加事件
+        /**
+         * @author laixiangran@163.com
+         * @description 注册事件
+         * @param {Element} element 注册事件的元素
+         * @param {String} type 事件类型
+         * @param {Function} handler 事件处理程序
+         */
         addEvent: function(element, type, handler) {
             if (element.addEventListener) {
                 element.addEventListener(type, handler, false);
@@ -1226,7 +1430,13 @@
             }
         },
 
-        // 移除事件处理程序
+        /**
+         * @author laixiangran@163.com
+         * @description 移除事件处理程序
+         * @param {Element} element 注册事件的元素
+         * @param {String} type 事件类型
+         * @param {Function} handler 事件处理程序
+         */
         removeEvent: function(element, type, handler) {
             if (element.removeEventListener) {
                 element.removeEventListener(type, handler, false);
@@ -1237,17 +1447,31 @@
             }
         },
 
-        // 获取对event对象的引用
+        /**
+         * @author laixiangran@163.com
+         * @description 获取对event对象的引用
+         * @param {Event} event 事件对象
+         * @return {Event}
+         */
         getEvent: function(event) {
             return event ? event : window.event;
         },
 
-        // 获取事件的目标
+        /**
+         * @author laixiangran@163.com
+         * @description 获取事件的目标
+         * @param {Event} event 事件对象
+         * @return {Element}
+         */
         getTarget: function(event) {
             return event.target || event.srcElement;
         },
 
-        // 取消事件的默认行为
+        /**
+         * @author laixiangran@163.com
+         * @description 取消事件的默认行为
+         * @param {Event} event 事件对象
+         */
         preventDefault: function(event) {
             if (event.preventDefault){
                 event.preventDefault();
@@ -1256,7 +1480,11 @@
             }
         },
 
-        // 阻止事件流（由于IE不支持事件捕获，该方法只能阻止事件冒泡）
+        /**
+         * @author laixiangran@163.com
+         * @description 阻止事件流（阻止事件捕获和冒泡）
+         * @param {Event} event 事件对象
+         */
         stopPropagation: function(event) {
             if (event.stopPropagation) {
                 event.stopPropagation();
@@ -1265,7 +1493,12 @@
             }
         },
 
-        // 获取事件相关元素
+        /**
+         * @author laixiangran@163.com
+         * @description 获取事件相关元素
+         * @param {Event} event 事件对象
+         * @return {Element}
+         */
         getRelatedTarget: function(event) {
             if (event.relatedTarget) {
                 return event.relatedTarget;
@@ -1278,7 +1511,12 @@
             }
         },
 
-        // 获取鼠标按钮值（0：主鼠标按钮（一般是鼠标左键），1：中间的鼠标按钮（鼠标滚轮按钮），2：次鼠标按钮（一般是鼠标右键））
+        /**
+         * @author laixiangran@163.com
+         * @description 获取鼠标按钮值（0：主鼠标按钮（一般是鼠标左键），1：中间的鼠标按钮（鼠标滚轮按钮），2：次鼠标按钮（一般是鼠标右键））
+         * @param {Event} event 鼠标事件对象
+         * @return {Number}
+         */
         getButton: function(event) {
             //  检测是否支持DOM版鼠标事件
             if (document.implementation.hasFeature("MouseEvents", "2.0")) {
@@ -1300,7 +1538,12 @@
             }
         },
 
-        // 获取鼠标滚轮增量值
+        /**
+         * @author laixiangran@163.com
+         * @description 获取鼠标滚轮增量值
+         * @param {Event} event 滚轮事件对象
+         * @return {Number}
+         */
         getWheelDelta: function(event) {
             // 当向前滚动鼠标滚轮时，wheelDelta是120的倍数；当向后滚动鼠标滚轮时，wheelDelta是-120的倍数
             if (event.wheelDelta){
@@ -1312,7 +1555,12 @@
             }
         },
 
-        // 获取键盘事件中的字符ASCII编码
+        /**
+         * @author laixiangran@163.com
+         * @description 获取键盘事件中的字符ASCII编码
+         * @param {Event} event 键盘事件对象
+         * @return {Number}
+         */
         getCharCode: function(event) {
             if (typeof event.charCode == "number") {
                 return event.charCode;
@@ -1321,7 +1569,12 @@
             }
         },
 
-        // 获取剪贴板内容
+        /**
+         * @author laixiangran@163.com
+         * @description 获取剪贴板内容
+         * @param {Event} event 剪切事件对象
+         * @return {String}
+         */
         getClipboardText: function(event) {
             var clipboardData = (event.clipboardData || window.clipboardData);
 
@@ -1331,7 +1584,13 @@
             return clipboardData.getData("text");
         },
 
-        // 设置剪切板内容，设置成功返回true
+        /**
+         * @author laixiangran@163.com
+         * @description 设置剪切板内容，设置成功返回true
+         * @param {Event} event 剪切事件对象
+         * @param {String} value 设置的内容
+         * @return {Boolean}
+         */
         setClipboardText: function(event, value) {
             if (event.clipboardData) {
                 // 由于Safari和Chrome的clipboardData.setData()方法不能识别"text"类型，则这里只能写"text/plain"
@@ -1343,8 +1602,8 @@
     }
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Function
  */
 
@@ -1355,6 +1614,13 @@
     com.$F = (function() {
         var slice = Array.prototype.slice;
         return {
+            /**
+             * @author laixiangran@163.com
+             * @description 设置函数内的this对象
+             * @param {Function} fun 函数
+             * @param {Object} thisp 新绑定到this的对象
+             * @return {Function}
+             */
             bind: function(fun, thisp) {
                 var args = slice.call(arguments, 2);
                 return function() {
@@ -1365,8 +1631,8 @@
     }());
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Number
  */
 
@@ -1375,12 +1641,23 @@
     var com = window.COM = window.COM || {};
 
     com.$N = {
-        // 数字保留n位小数，返回数字
+        /**
+         * @author laixiangran@163.com
+         * @description 数字保留n位小数，返回数字
+         * @param {Number} num 处理的数字
+         * @param {Number} n 小数位
+         * @return {Number}
+         */
         toFixedReturnNumber: function(num, n) {
             return Number(num.toFixed(n));
         },
 
-        // 提取数字中的整数部分
+        /**
+         * @author laixiangran@163.com
+         * @description 提取数字中的整数部分
+         * @param {Number} num 处理的数字
+         * @return {Number}
+         */
         integer: function(num) {
             // Math.ceil 向上舍入，Math.floor 向下舍入
             return Math[num < 0 ? "ceil" : "floor"](this);
@@ -1388,8 +1665,8 @@
     };
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Object
  */
 
@@ -1398,10 +1675,20 @@
     var com = window.COM = window.COM || {};
 
     com.$O = {
-        // 空函数
+        /**
+         * @author laixiangran@163.com
+         * @description 空函数
+         */
         noop: function() {},
 
-        // 扩展对象
+        /**
+         * @author laixiangran@163.com
+         * @description 扩展对象
+         * @param {Object} target 扩展对象
+         * @param {Object} source 原始对象
+         * @param {Boolean} isOverride 是否覆盖相同属性的值
+         * @return {Object}
+         */
         extend: function (target, source, isOverride) {
             if (isOverride === undefined) {
                 isOverride = true;
@@ -1416,7 +1703,13 @@
             return target;
         },
 
-        // 深度扩展对象
+        /**
+         * @author laixiangran@163.com
+         * @description 深度扩展对象，不能用在严格模式下
+         * @param {Object} target 扩展对象
+         * @param {Object} source 原始对象
+         * @return {Object}
+         */
         deepextend: function(target, source) {
             for (var p in source) {
                 if (source.hasOwnProperty(p)) {
@@ -1434,7 +1727,13 @@
             return target;
         },
 
-        // 包装对象
+        /**
+         * @author laixiangran@163.com
+         * @description 包装对象
+         * @param {Object} self 子对象
+         * @param {Object} parent 继承对象
+         * @return {Object}
+         */
         wrapper: function(self, parent) {
             var ins = function() {
                 self.apply(this, arguments);
@@ -1447,8 +1746,8 @@
     };
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for String
  */
 
@@ -1457,19 +1756,34 @@
     var com = window.COM = window.COM || {};
 
     com.$S = {
-        // 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor"
+        /**
+         * @author laixiangran@163.com
+         * @description 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor
+         * @param {String} str
+         * @return {String}
+         */
         camelize: function(str) {
             return str.replace(/-([a-z])/ig, function(all, letter) {
                 return letter.toUpperCase();
             });
         },
 
-        // 去掉字符串首尾空格
+        /**
+         * @author laixiangran@163.com
+         * @description 去掉字符串首尾空格
+         * @param {String} str
+         * @return {String}
+         */
         trim: function(str) {
             return str.replace(/^\s+|\s+$/g, "");
         },
 
-        // RGB转十六进制
+        /**
+         * @author laixiangran@163.com
+         * @description RGB转十六进制
+         * @param {String} str
+         * @return {String}
+         */
         rgbToHex: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
@@ -1503,7 +1817,12 @@
             }
         },
 
-        // 十六进制转RGB
+        /**
+         * @author laixiangran@163.com
+         * @description 十六进制转RGB
+         * @param {String} str
+         * @return {String}
+         */
         hexToRgb: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
@@ -1530,8 +1849,8 @@
     };
 }(window));
 /**
- * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Window
  */
 (function(window, undefined) {
@@ -1539,26 +1858,20 @@
     var com = window.COM = window.COM || {};
 
     com.$W = {
-
-        // 在文档中添加样式
-        addSheet: function() {
-            var doc, cssCode;
-            if (arguments.length == 1) {
-                doc = document;
-                cssCode = arguments[0];
-            }else if (arguments.length == 2) {
-                doc = arguments[0];
-                cssCode = arguments[1];
-            }else {
-                alert("addSheet函数最多接受两个参数!");
-            }
+        /**
+         * @author laixiangran@163.com
+         * @description 在文档中添加样式
+         * @param {Document} doc 文档对象
+         * @param {String} cssCode 插入的样式
+         */
+        addSheet: function(doc, cssCode) {
             var headElement = doc.getElementsByTagName("head")[0];
             var styleElements = headElement.getElementsByTagName("style");
             if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // IE
+                if (!+"\v1") {    // ie
                     doc.createStyleSheet();
                 }else {
-                    var tempStyleElement = doc.createElement("style"); // w3c
+                    var tempStyleElement = doc.createElement("style"); //w3c
                     tempStyleElement.setAttribute("type", "text/css");
                     headElement.appendChild(tempStyleElement);
                 }
@@ -1568,19 +1881,20 @@
             if (media != null && !/screen/.test(media.toLowerCase())) {
                 styleElement.setAttribute("media", "screen");
             }
-            if (!+"\v1") {    // IE
+            if (!+"\v1") {    // ie
                 styleElement.styleSheet.cssText += cssCode;
             }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // firefox支持直接innerHTML添加样式表字串
+                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
             }else{
                 styleElement.appendChild(doc.createTextNode(cssCode))
             }
         },
 
         /**
-         * 在window.onload前执行，相当于jq的ready()
-         * 使用domReady.ready()将执行函数加入队列中
-         **/
+         * @author laixiangran@163.com
+         * @description 在window.onload前执行，相当于jq的ready()。使用domReady.ready()将执行函数加入队列中
+         * @param {Function}
+         */
         domReady: (function() {
             // 用于添加要执行的函数
             var domReady = function() {
@@ -1657,10 +1971,9 @@
         }()),
 
         /**
-         * requestAnimationFrame兼容性扩展，两方面工作：
-         * 1、把各浏览器前缀进行统一
-         * 2、在浏览器没有requestAnimationFrame方法时将其指向setTimeout方法
-         * */
+         * @author laixiangran@163.com
+         * @description requestAnimationFrame兼容性扩展：把各浏览器前缀进行统一：没有requestAnimationFrame方法时将其指向setTimeout方法。
+         */
         requestAnimationFrame: (function() {
             var func = null;
             var lastTime = 0;

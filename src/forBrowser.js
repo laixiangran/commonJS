@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Browser
  */
 

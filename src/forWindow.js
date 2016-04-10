@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * 主页：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for Window
  */
 (function(window, undefined) {
@@ -8,26 +8,20 @@
     var com = window.COM = window.COM || {};
 
     com.$W = {
-
-        // 在文档中添加样式
-        addSheet: function() {
-            var doc, cssCode;
-            if (arguments.length == 1) {
-                doc = document;
-                cssCode = arguments[0];
-            }else if (arguments.length == 2) {
-                doc = arguments[0];
-                cssCode = arguments[1];
-            }else {
-                alert("addSheet函数最多接受两个参数!");
-            }
+        /**
+         * @author laixiangran@163.com
+         * @description 在文档中添加样式
+         * @param {Document} doc 文档对象
+         * @param {String} cssCode 插入的样式
+         */
+        addSheet: function(doc, cssCode) {
             var headElement = doc.getElementsByTagName("head")[0];
             var styleElements = headElement.getElementsByTagName("style");
             if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // IE
+                if (!+"\v1") {    // ie
                     doc.createStyleSheet();
                 }else {
-                    var tempStyleElement = doc.createElement("style"); // w3c
+                    var tempStyleElement = doc.createElement("style"); //w3c
                     tempStyleElement.setAttribute("type", "text/css");
                     headElement.appendChild(tempStyleElement);
                 }
@@ -37,19 +31,20 @@
             if (media != null && !/screen/.test(media.toLowerCase())) {
                 styleElement.setAttribute("media", "screen");
             }
-            if (!+"\v1") {    // IE
+            if (!+"\v1") {    // ie
                 styleElement.styleSheet.cssText += cssCode;
             }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // firefox支持直接innerHTML添加样式表字串
+                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
             }else{
                 styleElement.appendChild(doc.createTextNode(cssCode))
             }
         },
 
         /**
-         * 在window.onload前执行，相当于jq的ready()
-         * 使用domReady.ready()将执行函数加入队列中
-         **/
+         * @author laixiangran@163.com
+         * @description 在window.onload前执行，相当于jq的ready()。使用domReady.ready()将执行函数加入队列中
+         * @param {Function}
+         */
         domReady: (function() {
             // 用于添加要执行的函数
             var domReady = function() {
@@ -126,10 +121,9 @@
         }()),
 
         /**
-         * requestAnimationFrame兼容性扩展，两方面工作：
-         * 1、把各浏览器前缀进行统一
-         * 2、在浏览器没有requestAnimationFrame方法时将其指向setTimeout方法
-         * */
+         * @author laixiangran@163.com
+         * @description requestAnimationFrame兼容性扩展：把各浏览器前缀进行统一：没有requestAnimationFrame方法时将其指向setTimeout方法。
+         */
         requestAnimationFrame: (function() {
             var func = null;
             var lastTime = 0;

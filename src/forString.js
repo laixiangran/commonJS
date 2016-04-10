@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for String
  */
 
@@ -9,19 +9,34 @@
     var com = window.COM = window.COM || {};
 
     com.$S = {
-        // 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor"
+        /**
+         * @author laixiangran@163.com
+         * @description 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor
+         * @param {String} str
+         * @return {String}
+         */
         camelize: function(str) {
             return str.replace(/-([a-z])/ig, function(all, letter) {
                 return letter.toUpperCase();
             });
         },
 
-        // 去掉字符串首尾空格
+        /**
+         * @author laixiangran@163.com
+         * @description 去掉字符串首尾空格
+         * @param {String} str
+         * @return {String}
+         */
         trim: function(str) {
             return str.replace(/^\s+|\s+$/g, "");
         },
 
-        // RGB转十六进制
+        /**
+         * @author laixiangran@163.com
+         * @description RGB转十六进制
+         * @param {String} str
+         * @return {String}
+         */
         rgbToHex: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
@@ -55,7 +70,12 @@
             }
         },
 
-        // 十六进制转RGB
+        /**
+         * @author laixiangran@163.com
+         * @description 十六进制转RGB
+         * @param {String} str
+         * @return {String}
+         */
         hexToRgb: function(str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;

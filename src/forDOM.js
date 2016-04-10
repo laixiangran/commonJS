@@ -1,6 +1,6 @@
 /**
- * Created by laixiangran on 2016/1/24
- * homepage：http://www.cnblogs.com/laixiangran/
+ * Created by laixiangran@163.com on 2016/1/24
+ * homepage：http://www.laixiangran.cn
  * for DOM
  */
 
@@ -9,19 +9,48 @@
     var com = window.COM = window.COM || {};
 
     com.$D = {
-        // 根据id查找
+        /**
+         * @author laixiangran@163.com
+         * @description 根据id查找元素
+         * @param {String} id 元素id
+         * @param {Element} context 查找的范围元素
+         * @return {Element}
+         */
         byId: function(id, context) {
             var ctx = context || document;
             return ctx.getElementById(id);
         },
 
-        // 根据类名查找
+        /**
+         * @author laixiangran@163.com
+         * @description 根据类名查找元素
+         * @param {String} className 元素类名
+         * @param {Element} context 查找的范围元素
+         * @return {HTMLCollection}
+         */
         byClassName: function(className, context) {
             var ctx = context || document;
             return ctx.getElementsByClassName(className);
         },
 
-        // 添加class
+        /**
+         * @author laixiangran@163.com
+         * @description 根据标签名查找
+         * @param {String} tagName 元素名
+         * @param {Element} context 查找的范围元素
+         * @return {HTMLCollection}
+         */
+        byTagName: function(tagName, context) {
+            var ctx = context || document;
+            return ctx.getElementsByTagName(tagName);
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 元素添加class
+         * @param {Element} element 元素
+         * @param {*} className 添加的类，可以单个添加也可多个一起添加
+         */
         addClass: function(element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
@@ -39,7 +68,12 @@
             });
         },
 
-        // 删除class
+        /**
+         * @author laixiangran@163.com
+         * @description 元素删除class
+         * @param {Element} element 元素
+         * @param {*} className 删除的类，可以单个添加也可多个一起添加
+         */
         removeClass: function(element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
@@ -58,13 +92,12 @@
             });
         },
 
-        // 根据标签名查找
-        byTagName: function(tagName, context) {
-            var ctx = context || document;
-            return ctx.getElementsByTagName(tagName);
-        },
-
-        // 添加内容
+        /**
+         * @author laixiangran@163.com
+         * @description 元素插入子节点
+         * @param {Element} parentElem 父元素
+         * @param {String,Node} node 插入的节点
+         */
         append: function(parentElem, node) {
             if (typeof node == "string") {
                 var div = document.createElement("div");
@@ -77,48 +110,12 @@
             return node;
         },
 
-        // 在文档中添加样式
-        addSheet: function() {
-            var doc, cssCode;
-            if (arguments.length == 1) {
-                doc = document;
-                cssCode = arguments[0];
-            }else if (arguments.length == 2) {
-                doc = arguments[0];
-                cssCode = arguments[1];
-            }else {
-                alert("addSheet函数最多接受两个参数!");
-            }
-            var headElement = doc.getElementsByTagName("head")[0];
-            var styleElements = headElement.getElementsByTagName("style");
-            if(styleElements.length == 0){ // 如果不存在style元素则创建
-                if (!+"\v1") {    // ie
-                    doc.createStyleSheet();
-                }else {
-                    var tempStyleElement = doc.createElement("style"); //w3c
-                    tempStyleElement.setAttribute("type", "text/css");
-                    headElement.appendChild(tempStyleElement);
-                }
-            }
-            var  styleElement = styleElements[0];
-            var media = styleElement.getAttribute("media");
-            if (media != null && !/screen/.test(media.toLowerCase())) {
-                styleElement.setAttribute("media", "screen");
-            }
-            if (!+"\v1") {    // ie
-                styleElement.styleSheet.cssText += cssCode;
-            }else if (/a/[-1] == "a") {
-                styleElement.innerHTML += cssCode; // 火狐支持直接innerHTML添加样式表字串
-            }else{
-                styleElement.appendChild(doc.createTextNode(cssCode))
-            }
-        },
-
-        /*
-         * iframe高度自适应
-         * @param id iframe的id
-         * @param endTime 计算的时间
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description iframe高度自适应
+         * @param {String} id iframe的id
+         * @param {Number} endTime 计算的时间
+         */
         adjustIframe: function(id, endTime) {
             var iframe = this.byId(id),
                 time = 0,
@@ -138,11 +135,12 @@
             }
         },
 
-        /*
-         * 拖拽元素
-         * @param elem 拖拽的元素
-         * @param callback 拖拽结束之后的回调函数
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 拖拽元素
+         * @param {Element} elem 拖拽的元素
+         * @param {Function} callback 拖拽结束之后的回调函数
+         */
         drag: function(elem, callback) {
             callback = callback || function() {};
             var $D = this;
@@ -188,19 +186,34 @@
             };
         },
 
-        // 获取元素被窗口卷去的上部分高度
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素被窗口卷去的上部分高度
+         * @param {Element} elem
+         * @return {Number}
+         */
         getScrollTop: function(elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
         },
 
-        // 获取元素被窗口卷去的左部分宽度
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素被窗口卷去的左部分宽度
+         * @param {Element} elem
+         * @return {Number}
+         */
         getScrollLeft: function(elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollLeft || doc.body.scrollLeft;
         },
 
-        // 获取元素的左偏移量
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的左偏移量
+         * @param {Element} elem
+         * @return {Number}
+         */
         getElementLeft: function(elem) {
             var actualLeft = elem.offsetLeft;
             var current = elem.offsetParent;
@@ -211,7 +224,12 @@
             return actualLeft;
         },
 
-        // 获取元素的上偏移量
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的上偏移量
+         * @param {Element} elem
+         * @return {Number}
+         */
         getElementTop: function(elem) {
             var actualTop = elem.offsetTop;
             var current = elem.offsetParent;
@@ -222,7 +240,12 @@
             return actualTop;
         },
 
-        // 获取元素的范围（包括窗口不可见的部分）
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素的范围（包括窗口不可见的部分）
+         * @param {Element} elem
+         * @return {Object}
+         */
         getRect: function(elem) {
             var left = 0,
                 top = 0,
@@ -250,7 +273,12 @@
             };
         },
 
-        // 获取元素在窗口可见的范围
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素在窗口可见的范围
+         * @param {Element} elem
+         * @return {Object}
+         */
         getClientRect: function(elem) {
             var rect = this.getRect(elem),
                 sLeft = this.getScrollLeft(elem),
@@ -262,7 +290,11 @@
             return rect;
         },
 
-        // 获取浏览器视口大小
+        /**
+         * @author laixiangran@163.com
+         * @description 获取浏览器视口大小
+         * @return {Object}
+         */
         getViewport: function() {
             if (document.compatMode == "BackCompat") { // 判断是否运行在混杂模式
                 return {
@@ -277,11 +309,13 @@
             }
         },
 
-        /*
-         * 元素是否包含某元素
-         * @parma elemA 包含元素
-         * @param elemB 被包含元素
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 元素是否包含某元素
+         * @parma {Element} elemA 包含元素
+         * @param {Element} elemB 被包含元素
+         * @return {Boolean}
+         */
         contains: function(elemA, elemB) {
             if (typeof elemA.contains == "function" && (!COM.$B.engine.webkit || COM.$B.engine.webkit >= 522)) {
                 return elemA.contains(elemB);
@@ -300,7 +334,12 @@
             }
         },
 
-        // 获取所有css属性
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素所有css属性
+         * @parma {Element} elem
+         * @return {CSSStyleDeclaration}
+         */
         getCurStyle: function(elem) {
             if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
                 return document.defaultView.getComputedStyle(elem, null);
@@ -309,11 +348,13 @@
             }
         },
 
-        /*
-        * 获取元素指定的css属性的值
-        * @param elem 当前元素
-        * @parma name css属性名
-        * */
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素指定的css属性的值
+         * @param {Element} elem 当前元素
+         * @parma {String} name css属性名
+         * @return {*}
+         */
         getStyle: function(elem, name) {
             var style = null;
             if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
@@ -350,12 +391,13 @@
             }
         },
 
-        /*
-         * 设置元素指定的css属性的值
-         * @param elem 当前元素
-         * @parma style css属性名
-         * @param value css属性的指
-         * */
+        /**
+         * @author laixiangran@163.com
+         * @description 设置元素指定的css属性的值
+         * @param {Array,Element} elems 设置的元素
+         * @parma {String,Object} style css属性名
+         * @param {*} value css属性的指（可选）
+         */
         setStyle: function(elems, style, value) {
             if (!elems.length) {
                 elems = [elems];
@@ -381,7 +423,12 @@
             });
         },
 
-        // 获取元素大小
+        /**
+         * @author laixiangran@163.com
+         * @description 获取元素大小
+         * @param {Element} elem
+         * @return {Object}
+         */
         getSize: function(elem) {
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
@@ -421,7 +468,13 @@
             };
         },
 
-        // 选择文本框中的文本
+        /**
+         * @author laixiangran@163.com
+         * @description 选择文本框中的文本
+         * @param {Element} textbox 文本框
+         * @param {Number} startIndex 开始点
+         * @param {Number} stopIndex 结束点
+         */
         selectText: function(textbox, startIndex, stopIndex) {
             if (textbox.setSelectionRange) {
                 textbox.setSelectionRange(startIndex, stopIndex);
@@ -435,7 +488,12 @@
             textbox.focus();
         },
 
-        // 获取文本框中选择的文本
+        /**
+         * @author laixiangran@163.com
+         * @description 获取文本框中选择的文本
+         * @param {Element} textbox 文本框
+         * @return {String}
+         */
         getSelectedText: function(textbox) {
             if (typeof textbox.selectionStart == "number") {
                 return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
