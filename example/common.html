@@ -6,11 +6,15 @@
     <script src="../dist/common.js"></script>
     <script>
         COM.$W.domReady(function() {
-
+            var img = COM.$D.byId("image");
+            COM.$E.addEvent(img, "load", function() {
+                console.log(COM.$S.imgToBase64(img).substr(0, 1000));
+            });
         });
     </script>
 </head>
 <body>
+<img id="image" src="images/subscription.jpg"/>
 <span id="main"></span>
 </body>
 </html>

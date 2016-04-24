@@ -1755,7 +1755,154 @@
 
     var com = window.COM = window.COM || {};
 
+    var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".split(""); //索引表
+
     com.$S = {
+        /**
+         * @author laixiangran@163.com
+         * @description 将二进制序列转换为Base64编码
+         * @param  {String} bitStr
+         * @return {String}
+         */
+        binToBase64: function(bitStr) {
+            var result = "";
+            var tail = bitStr.length % 6;
+            var bitStringTemp1 = bitStr.substr(0, bitStr.length - tail);
+            var bitStringTemp2 = bitStr.substr(bitStr.length - tail, tail);
+            for (var i = 0, len = bitStringTemp1.length; i < len; i += 6) {
+                var index = parseInt(bitStringTemp1.substr(i, 6), 2);
+                result += code[index];
+            }
+            bitStringTemp2 += new Array(7 - tail).join("0");
+            if (tail) {
+                result += code[parseInt(bitStringTemp2, 2)];
+                result += new Array((6 - tail) / 2 + 1).join("=");
+            }
+            return result;
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将base64编码转换为二进制序列
+         * @param  {String} base64Str
+         * @return {String}
+         */
+        base64ToBin: function(base64Str) {
+            var bitString = "";
+            var tail = 0;
+            for (var i = 0, len = base64Str.length; i < len; i++) {
+                if (base64Str[i] != "=") {
+                    var decode = code.indexOf(base64Str[i]).toString(2);
+                    bitString += (new Array(7 - decode.length)).join("0") + decode;
+                } else {
+                    tail++;
+                }
+            }
+            return bitString.substr(0, bitString.length - tail * 2);
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将字符转换为二进制序列
+         * @param  {String} str
+         * @return {String}
+         */
+        strToBin: function(str) {
+            var result = "";
+            for (var i = 0, len = str.length; i < len; i++) {
+                var charCode = str.charCodeAt(i).toString(2);
+                result += (new Array(9 - charCode.length).join("0") + charCode);
+            }
+            return result;
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将二进制序列转换为字符串
+         * @param {String} bitStr
+         * @return {String}
+         */
+        binToStr: function BinToStr(bitStr) {
+            var result = "";
+            for (var i = 0, len = bitStr.length; i < len; i += 8) {
+                result += String.fromCharCode(parseInt(bitStr.substr(i, 8), 2));
+            }
+            return result;
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将字符串转换为base64编码
+         * @param {String} str
+         * @return {String}
+         */
+        strToBase64: function(str) {
+            return this.binToBase64(this.strToBin(str));
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将base64编码转换为字符串
+         * @param {String} base64Str
+         * @return {String}
+         */
+        base64ToStr: function(base64Str) {
+            return this.binToStr(this.base64ToBin(base64Str));
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将图片转换为base64编码
+         * @param {Element} img
+         * @return {String}
+         */
+        imgToBase64: function(img) {
+            // 生成canvas
+            function getCanvas(w, h) {
+                var c = document.createElement("canvas");
+                c.width = w;
+                c.height = h;
+                return c;
+            }
+
+            // 获取图片像素数据
+            function getPixels(img) {
+                var c = getCanvas(img.width, img.height);
+                var ctx = c.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                return ctx.getImageData(0, 0, c.width, c.height);
+            }
+
+            var imgData = getPixels(img).data;
+            var imgWidth = getPixels(img).width;
+            var imgHeight = getPixels(img).height;
+
+            var bin = "";
+            for (var i = 0, len = imgData.length; i < len; i++) {
+                bin += this.strToBin("" + imgData[i]);
+            }
+            bin += this.strToBin("$$" + imgWidth + "," + imgHeight + "$$");
+            return this.binToBase64(bin);
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 将base64编码转换为图片
+         * @param {String} data
+         * @return {Object}
+         */
+        base64Toimg: function(data) {
+            var str = this.binToStr(this.base64ToBin(data));
+            var imgWidth = str.match(/\$\$(\d+),(\d+)\$\$$/, "")[1];
+            var imgHeight = str.match(/\$\$(\d+),(\d+)\$\$$/, "")[2];
+            var imgData = this.base64ToBin(data).replace(this.strToBin("$$" + imgWidth + "," + imgHeight + "$$"), "");
+            var imageDataArray = new Uint8ClampedArray(imgWidth * imgHeight * 4);
+            for (var i = 0, len = imageDataArray.length; i < len; i++) {
+                imageDataArray[i] = parseInt(imgData.substr(i * 8, 8), 2);
+            }
+            return new ImageData(ImageDataArray, imgWidth, imgHeight);
+        },
+
         /**
          * @author laixiangran@163.com
          * @description 将字符串中"-"后的小写字符进行大写，如：camelize("background-color") 输出为"backgroundColor
