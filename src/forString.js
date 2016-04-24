@@ -153,7 +153,7 @@
             for (var i = 0, len = imageDataArray.length; i < len; i++) {
                 imageDataArray[i] = parseInt(imgData.substr(i * 8, 8), 2);
             }
-            return new ImageData(ImageDataArray, imgWidth, imgHeight);
+            return new ImageData(imageDataArray, imgWidth, imgHeight);
         },
 
         /**

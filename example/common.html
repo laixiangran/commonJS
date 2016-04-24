@@ -8,13 +8,20 @@
         COM.$W.domReady(function() {
             var img = COM.$D.byId("image");
             COM.$E.addEvent(img, "load", function() {
-                console.log(COM.$S.imgToBase64(img).substr(0, 1000));
+                paint(COM.$S.base64Toimg(COM.$S.imgToBase64(img)));
             });
+            function paint(imgData) {
+                var canvas = document.getElementById("myCanvas");
+                var ctx = canvas.getContext("2d");
+                ctx.fillRect(0, 0, imgData.width, imgData.height);
+                ctx.putImageData(imgData, 0, 0);
+            }
         });
     </script>
 </head>
 <body>
 <img id="image" src="images/subscription.jpg"/>
+<canvas id="myCanvas"></canvas>
 <span id="main"></span>
 </body>
 </html>
