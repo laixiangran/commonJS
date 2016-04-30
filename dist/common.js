@@ -427,9 +427,11 @@
 
     var com = window.COM = window.COM || {};
 
-    com.name = "commonJS";
-
-    com.version = "v1.2";
+    com.info = {
+        name: "commonJS",
+        version: "1.2",
+        author: "laixiangran@163.com"
+    };
 
     /**
      * @author laixiangran@163.com
