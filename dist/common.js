@@ -427,6 +427,10 @@
 
     var com = window.COM = window.COM || {};
 
+    com.name = "commonJS";
+
+    com.version = "v1.2";
+
     /**
      * @author laixiangran@163.com
      * @description 产生唯一ID
@@ -970,7 +974,7 @@
          * @author laixiangran@163.com
          * @description 元素删除class
          * @param {Element} element 元素
-         * @param {*} className 删除的类，可以单个添加也可多个一起添加
+         * @param {*} className 删除的类，可以单个删除也可多个一起删除
          */
         removeClass: function(element, className) {
             if (!com.$A.isArray(className)) {
@@ -992,7 +996,51 @@
 
         /**
          * @author laixiangran@163.com
-         * @description 元素插入子节点
+         * @description 获取当前元素的子元素
+         * @param {Element} element 元素
+         * @param {Boolean} isSelf 是否返回自身，默认为false
+         * @return {String}
+         */
+        getHtml: function(element, isSelf) {
+            isSelf = isSelf || false;
+            return isSelf ? element.outerHTML : element.innerHTML;
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 获取当前元素包含的所有文本（包含所有子节点的文本）
+         * @param {Element} element 元素
+         * @return {String}
+         */
+        getText: function(element) {
+            return (typeof element.innerText == "string") ? element.innerText : element.textContent;
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 在当前元素插入子元素
+         * @param {Element} element 元素
+         * @param {String} elemStr 插入的元素
+         * @param {String} type 设置方式，默认"inner"
+         * type可取的值：
+         * "inner"：在当前元素内插入子元素，之前子元素清空；
+         * "outer"：使用新的元素替换当前元素；
+         * "beforebegin"：在当前元素之前插入一个紧邻的同辈元素；
+         * "afterbegin"：在当前元素之下插入一个新的子元素或在第一个子元素之前再插入新的子元素；
+         * "beforeend"：在当前元素之下插入一个新的子元素或在最后一个子元素之后再插入新的子元素；
+         * "afterend"：在当前元素之后插入一个紧邻的同辈元素。
+         */
+        inserHtml: function(element, elemStr, type) {
+            if (!type || type == "inner" || type == "outer") {
+                type == "outer" ? element.outerHTML = elemStr : element.innerHTML = elemStr;
+            } else {
+                element.insertAdjacentHTML(type, elemStr);
+            }
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 【废弃】 元素插入子节点，建议使用inserHtml方法
          * @param {Element} parentElem 父元素
          * @param {String,Node} node 插入的节点
          */

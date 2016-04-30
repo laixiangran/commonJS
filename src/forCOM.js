@@ -7,6 +7,10 @@
 
     var com = window.COM = window.COM || {};
 
+    com.name = "commonJS";
+
+    com.version = "v1.2";
+
     /**
      * @author laixiangran@163.com
      * @description 产生唯一ID

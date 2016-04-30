@@ -1,12 +1,13 @@
 {
   "name": "commonJS",
-  "version": "1.0.0",
+  "version": "1.2",
   "description": "汇集常用方法的javaScript库",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "colorPicker"
+    "commonJS",
+    "laixiangran"
   ],
   "homepage": "https://github.com/laixiangran/commonJS",
   "repository": {

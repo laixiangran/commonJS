@@ -1,4 +1,4 @@
-#commonJS v1.0.0
+#commonJS
 ##汇集常用方法的javaScript库
 ### 该库以COM为命名空间，其涵盖如下对象：
 * [COM](https://github.com/laixiangran/commonJS/blob/master/src/forCOM.js) -- for `COM（对应命名空间）`
