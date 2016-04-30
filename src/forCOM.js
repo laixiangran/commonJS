@@ -7,7 +7,7 @@
 
     var com = window.COM = window.COM || {};
 
-    com.info = {
+    com.infos = {
         name: "commonJS",
         version: "1.2",
         author: "laixiangran@163.com"
