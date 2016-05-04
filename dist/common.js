@@ -1909,7 +1909,7 @@
          */
         imgToBase64: function(url, callback) {
             var image = new Image();
-            image.crossOrigin = ''; // 引用其他服务器下的图片，只支持chrome 和 firefox
+            image.crossOrigin = "anonymous"; // 引用其他服务器下的图片，不发送凭证
             image.src = url;
             image.onload = function() {
                 var canvas = document.createElement("canvas");
