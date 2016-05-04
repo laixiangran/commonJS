@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>commonJS 测试</title>
+</head>
+<body>
+    <img id="myImg" src="" alt=""/>
+    <span id="main"></span>
     <script src="../dist/common.js"></script>
     <script>
         COM.$W.domReady(function() {
-            var img = COM.$D.byId("image");
-            COM.$E.addEvent(img, "load", function() {
-                paint(COM.$S.base64Toimg(COM.$S.imgToBase64(img)));
-            });
-            function paint(imgData) {
-                var canvas = document.getElementById("myCanvas");
-                var ctx = canvas.getContext("2d");
-                ctx.fillRect(0, 0, imgData.width, imgData.height);
-                ctx.putImageData(imgData, 0, 0);
-            }
+           COM.$S.imgToBase64("images/test.png", function(data) {
+               COM.$D.byId("myImg").src = data;
+           });
         });
     </script>
-</head>
-<body>
-<img id="image" src="images/subscription.jpg"/>
-<canvas id="myCanvas"></canvas>
-<span id="main"></span>
 </body>
 </html>

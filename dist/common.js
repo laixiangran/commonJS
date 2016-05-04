@@ -1902,55 +1902,26 @@
 
         /**
          * @author laixiangran@163.com
-         * @description 将图片转换为base64编码
-         * @param {Element} img
+         * @description 将图片（图片url）转换为base64编码
+         * @param {String} url
+         * @param {Function} callback 回调函数
          * @return {String}
          */
-        imgToBase64: function(img) {
-            // 生成canvas
-            function getCanvas(w, h) {
-                var c = document.createElement("canvas");
-                c.width = w;
-                c.height = h;
-                return c;
-            }
-
-            // 获取图片像素数据
-            function getPixels(img) {
-                var c = getCanvas(img.width, img.height);
-                var ctx = c.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                return ctx.getImageData(0, 0, c.width, c.height);
-            }
-
-            var imgData = getPixels(img).data;
-            var imgWidth = getPixels(img).width;
-            var imgHeight = getPixels(img).height;
-
-            var bin = "";
-            for (var i = 0, len = imgData.length; i < len; i++) {
-                bin += this.strToBin("" + imgData[i]);
-            }
-            bin += this.strToBin("$$" + imgWidth + "," + imgHeight + "$$");
-            return this.binToBase64(bin);
-        },
-
-        /**
-         * @author laixiangran@163.com
-         * @description 将base64编码转换为图片
-         * @param {String} data
-         * @return {Object}
-         */
-        base64Toimg: function(data) {
-            var str = this.binToStr(this.base64ToBin(data));
-            var imgWidth = str.match(/\$\$(\d+),(\d+)\$\$$/, "")[1];
-            var imgHeight = str.match(/\$\$(\d+),(\d+)\$\$$/, "")[2];
-            var imgData = this.base64ToBin(data).replace(this.strToBin("$$" + imgWidth + "," + imgHeight + "$$"), "");
-            var imageDataArray = new Uint8ClampedArray(imgWidth * imgHeight * 4);
-            for (var i = 0, len = imageDataArray.length; i < len; i++) {
-                imageDataArray[i] = parseInt(imgData.substr(i * 8, 8), 2);
-            }
-            return new ImageData(imageDataArray, imgWidth, imgHeight);
+        imgToBase64: function(url, callback) {
+            var image = new Image();
+            image.crossOrigin = ''; // 引用其他服务器下的图片，只支持chrome 和 firefox
+            image.src = url;
+            image.onload = function() {
+                var canvas = document.createElement("canvas");
+                canvas.width = image.width;
+                canvas.height = image.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(image, 0, 0);
+                var ext = image.src.substring(image.src.lastIndexOf(".") + 1).toLowerCase();
+                var base64 = canvas.toDataURL("image/" + ext);
+                callback(base64);
+                canvas = null;
+            };
         },
 
         /**
