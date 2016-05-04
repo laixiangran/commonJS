@@ -1913,6 +1913,8 @@
             image.src = url;
             image.onload = function() {
                 var canvas = document.createElement("canvas");
+                canvas.width = image.width;
+                canvas.height = image.height;
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(image, 0, 0);
                 var ext = image.src.substring(image.src.lastIndexOf(".") + 1).toLowerCase();
