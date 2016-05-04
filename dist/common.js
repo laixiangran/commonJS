@@ -917,8 +917,8 @@
          * @author laixiangran@163.com
          * @description 根据id查找元素
          * @param {String} id 元素id
-         * @param {Element} context 查找的范围元素
-         * @return {Element}
+         * @param {HTMLElement} context 查找的范围元素
+         * @return {HTMLElement}
          */
         byId: function(id, context) {
             var ctx = context || document;
@@ -929,7 +929,7 @@
          * @author laixiangran@163.com
          * @description 根据类名查找元素
          * @param {String} className 元素类名
-         * @param {Element} context 查找的范围元素
+         * @param {HTMLElement} context 查找的范围元素
          * @return {HTMLCollection}
          */
         byClassName: function(className, context) {
@@ -941,7 +941,7 @@
          * @author laixiangran@163.com
          * @description 根据标签名查找
          * @param {String} tagName 元素名
-         * @param {Element} context 查找的范围元素
+         * @param {HTMLElement} context 查找的范围元素
          * @return {HTMLCollection}
          */
         byTagName: function(tagName, context) {
@@ -952,7 +952,7 @@
         /**
          * @author laixiangran@163.com
          * @description 元素添加class
-         * @param {Element} element 元素
+         * @param {HTMLElement} element 元素
          * @param {*} className 添加的类，可以单个添加也可多个一起添加
          */
         addClass: function(element, className) {
@@ -975,7 +975,7 @@
         /**
          * @author laixiangran@163.com
          * @description 元素删除class
-         * @param {Element} element 元素
+         * @param {HTMLElement} element 元素
          * @param {*} className 删除的类，可以单个删除也可多个一起删除
          */
         removeClass: function(element, className) {
@@ -999,7 +999,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取当前元素的子元素
-         * @param {Element} element 元素
+         * @param {HTMLElement} element 元素
          * @param {Boolean} isSelf 是否返回自身，默认为false
          * @return {String}
          */
@@ -1011,7 +1011,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取当前元素包含的所有文本（包含所有子节点的文本）
-         * @param {Element} element 元素
+         * @param {HTMLElement} element 元素
          * @return {String}
          */
         getText: function(element) {
@@ -1021,7 +1021,7 @@
         /**
          * @author laixiangran@163.com
          * @description 在当前元素插入子元素
-         * @param {Element} element 元素
+         * @param {HTMLElement} element 元素
          * @param {String} elemStr 插入的元素
          * @param {String} type 设置方式，默认"inner"
          * type可取的值：
@@ -1043,7 +1043,7 @@
         /**
          * @author laixiangran@163.com
          * @description 【废弃】 元素插入子节点，建议使用inserHtml方法
-         * @param {Element} parentElem 父元素
+         * @param {HTMLElement} parentElem 父元素
          * @param {String,Node} node 插入的节点
          */
         append: function(parentElem, node) {
@@ -1086,7 +1086,7 @@
         /**
          * @author laixiangran@163.com
          * @description 拖拽元素
-         * @param {Element} elem 拖拽的元素
+         * @param {HTMLElement} elem 拖拽的元素
          * @param {Function} callback 拖拽结束之后的回调函数
          */
         drag: function(elem, callback) {
@@ -1137,7 +1137,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素被窗口卷去的上部分高度
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Number}
          */
         getScrollTop: function(elem) {
@@ -1148,7 +1148,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素被窗口卷去的左部分宽度
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Number}
          */
         getScrollLeft: function(elem) {
@@ -1159,7 +1159,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素的左偏移量
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Number}
          */
         getElementLeft: function(elem) {
@@ -1175,7 +1175,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素的上偏移量
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Number}
          */
         getElementTop: function(elem) {
@@ -1191,7 +1191,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素的范围（包括窗口不可见的部分）
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Object}
          */
         getRect: function(elem) {
@@ -1224,7 +1224,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素在窗口可见的范围
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Object}
          */
         getClientRect: function(elem) {
@@ -1260,8 +1260,8 @@
         /**
          * @author laixiangran@163.com
          * @description 元素是否包含某元素
-         * @parma {Element} elemA 包含元素
-         * @param {Element} elemB 被包含元素
+         * @parma {HTMLElement} elemA 包含元素
+         * @param {HTMLElement} elemB 被包含元素
          * @return {Boolean}
          */
         contains: function(elemA, elemB) {
@@ -1285,7 +1285,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素所有css属性
-         * @parma {Element} elem
+         * @parma {HTMLElement} elem
          * @return {CSSStyleDeclaration}
          */
         getCurStyle: function(elem) {
@@ -1299,7 +1299,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素指定的css属性的值
-         * @param {Element} elem 当前元素
+         * @param {HTMLElement} elem 当前元素
          * @parma {String} name css属性名
          * @return {*}
          */
@@ -1342,7 +1342,7 @@
         /**
          * @author laixiangran@163.com
          * @description 设置元素指定的css属性的值
-         * @param {Array,Element} elems 设置的元素
+         * @param {Array,HTMLElement} elems 设置的元素
          * @parma {String,Object} style css属性名
          * @param {*} value css属性的指（可选）
          */
@@ -1374,7 +1374,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取元素大小
-         * @param {Element} elem
+         * @param {HTMLElement} elem
          * @return {Object}
          */
         getSize: function(elem) {
@@ -1419,7 +1419,7 @@
         /**
          * @author laixiangran@163.com
          * @description 选择文本框中的文本
-         * @param {Element} textbox 文本框
+         * @param {HTMLInputElement} textbox 文本框
          * @param {Number} startIndex 开始点
          * @param {Number} stopIndex 结束点
          */
@@ -1439,7 +1439,7 @@
         /**
          * @author laixiangran@163.com
          * @description 获取文本框中选择的文本
-         * @param {Element} textbox 文本框
+         * @param {HTMLInputElement} textbox 文本框
          * @return {String}
          */
         getSelectedText: function(textbox) {
@@ -1450,6 +1450,57 @@
                 // 在与select事件一起使用的时候，可以假定是用户选择了文本框中的文本，因而触发了该事件，故可实现获取文本框中选择的文本
                 return document.selection.createRange().text;
             }
+        },
+
+        /**
+         * @author laixiangran@163.com
+         * @description 图片灰度化
+         * 原理：设置像素点的R、G、B三个分量的值某个灰度值，该灰度值有两种算法：
+         * 1、求出每个像素点的R、G、B三个分量的平均值，然后将这个平均值赋予给这个像素的三个分量。
+         * 2、（默认使用）根据YUV颜色空间，Y分量的物理意义是点的亮度，由该值反映亮度等级。根据RGB和YUV颜色空间的变化关系可建立亮度Y与R、G、B三个颜色分量的对应：Y = 0.3R+0.59G+0.11B，以这个亮度值表达图像的灰度值。
+         * @param {HTMLImageElement} img 图片
+         * @param {Boolean} isAvg 是采用平均值算法还是采用YUV与RGB变化关系算法
+         * @return {HTMLImageElement}
+         */
+        removeImageColors: function(img, isAvg) {
+            var oCanvas = document.createElement("canvas"),
+                oCtx = oCanvas.getContext("2d"),
+                nWidth = img.offsetWidth,
+                nHeight = img.offsetHeight,
+                oImgData = null,
+                aPix = null,
+                nPixLen = 0,
+                nPixel = 0,
+                oGrayImg = new Image(),
+                ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase(),
+                calFunc = null;
+            oCanvas.width = nWidth;
+            oCanvas.height = nHeight;
+            oCtx.drawImage(img, 0, 0);
+            oImgData = oCtx.getImageData(0, 0, nWidth, nHeight);
+            aPix = oImgData.data;
+            nPixLen = aPix.length;
+
+            calFunc = (function() {
+                if (isAvg) {
+                    return function(r, g ,b) {
+                        return Math.round((r + g + b) / 3);
+                    };
+                } else {
+                    return function(r, g ,b) {
+                        return Math.round((0.3 * r + 0.59 * g + 0.11 * b));
+                    };
+                }
+            }());
+
+            for (nPixel = 0; nPixel < nPixLen; nPixel += 4) {
+                aPix[nPixel + 2] = aPix[nPixel + 1] = aPix[nPixel] = calFunc(aPix[nPixel], aPix[nPixel + 1], aPix[nPixel + 2]);
+            }
+
+            oCtx.putImageData(oImgData, 0, 0);
+            oGrayImg.src = oCanvas.toDataURL("image/" + ext);
+            oCanvas = null;
+            return oGrayImg;
         }
     };
 }(window));

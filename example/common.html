@@ -10,8 +10,10 @@
     <script src="../dist/common.js"></script>
     <script>
         COM.$W.domReady(function() {
-           COM.$S.imgToBase64("images/test.png", function(data) {
+           COM.$S.imgToBase64("images/logo.jpg", function(data) {
                COM.$D.byId("myImg").src = data;
+               document.body.appendChild(COM.$D.removeImageColors(COM.$D.byId("myImg")));
+               document.body.appendChild(COM.$D.removeImageColors(COM.$D.byId("myImg"), true));
            });
         });
     </script>
