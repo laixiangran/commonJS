@@ -10,11 +10,13 @@
     <script src="../dist/common.js"></script>
     <script>
         COM.$W.domReady(function() {
-           COM.$S.imgToBase64("images/logo.jpg", function(data) {
-               COM.$D.byId("myImg").src = data;
-               document.body.appendChild(COM.$D.removeImageColors(COM.$D.byId("myImg")));
-               document.body.appendChild(COM.$D.removeImageColors(COM.$D.byId("myImg"), true));
-           });
+            var arr = [];
+            for (var i = 0; i < 1000; i++) {
+                arr[i] = i + 1;
+            }
+            COM.$F.timeChunk(arr, function(num) {
+                console.log(num);
+            }, 100, 1000);
         });
     </script>
 </body>
