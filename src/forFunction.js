@@ -108,6 +108,21 @@
                     }
                     start();
                 }, interval || 100);
+            },
+
+            /**
+             * @author laixiangran@163.com
+             * @description 函数AOP（面向切面编程）
+             * @param {Function} fun 主函数
+             * @param {Function} beforeFun 主函数执行之前的运行程序
+             * @param {Function} afterFun 主函数执行之后的运行程序
+             */
+            aop: function(fun, beforeFun, afterFun) {
+                return function() {
+                    beforeFun.apply(this, arguments); // 修正this
+                    fun.apply(this, arguments);
+                    afterFun.apply(this, arguments);
+                }
             }
         };
     }());
