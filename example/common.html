@@ -5,18 +5,20 @@
     <title>commonJS 测试</title>
 </head>
 <body>
-    <img id="myImg" src=""/>
-    <span id="main">前面是加载的图片</span>
     <script src="../dist/common.js"></script>
     <script>
         COM.$W.domReady(function() {
-            var arr = [];
-            for (var i = 0; i < 1000; i++) {
-                arr[i] = i + 1;
-            }
-            COM.$F.timeChunk(arr, function(num) {
-                console.log(num);
-            }, 100, 1000);
+            var fn = function() {
+                console.log(2);
+            };
+
+            fn = COM.$F.aop(fn, function() {
+                console.log(1);
+            }, function() {
+                console.log(3);
+            });
+
+            fn();
         });
     </script>
 </body>
