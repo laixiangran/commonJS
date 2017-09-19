@@ -6,7 +6,7 @@
 
 var gulp = require("gulp"),
     autoprefixer = require("gulp-autoprefixer"), // css自动添加前缀׺
-    minifycss = require("gulp-minify-css"), // 压缩css
+    minifycss = require("gulp-clean-css"), // 压缩css
     jshint = require("gulp-jshint"), // 校验js
     uglify = require("gulp-uglify"), // 压缩js
     rename = require("gulp-rename"), // 文件重命名

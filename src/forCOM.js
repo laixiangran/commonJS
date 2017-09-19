@@ -9,7 +9,7 @@
 
     com.infos = {
         name: "commonJS",
-        version: "1.2",
+        version: "1.0.0",
         author: "laixiangran@163.com"
     };
 

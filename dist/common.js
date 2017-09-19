@@ -429,7 +429,7 @@
 
     com.infos = {
         name: "commonJS",
-        version: "1.2",
+        version: "1.0.0",
         author: "laixiangran@163.com"
     };
 
@@ -902,6 +902,7 @@
         }
     };
 }(window));
+
 /**
  * Created by laixiangran@163.com on 2016/1/24
  * homepage：http://www.laixiangran.cn
@@ -1504,6 +1505,7 @@
         }
     };
 }(window));
+
 /**
  * Created by laixiangran@163.com on 2016/1/24
  * 主页：http://www.laixiangran.cn
@@ -1831,6 +1833,7 @@
         };
     }());
 }(window));
+
 /**
  * Created by laixiangran@163.com on 2016/1/24
  * homepage：http://www.laixiangran.cn
