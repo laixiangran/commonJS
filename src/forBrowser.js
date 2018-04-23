@@ -4,11 +4,11 @@
  * for Browser
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
-    var $B = com.$B = (function() {
+    var $B = com.$B = (function () {
         // 呈现引擎信息
         var engine = {
 
@@ -17,7 +17,7 @@
             gecko: 0,
             webkit: 0,
             khtml: 0,
-            opera:0,
+            opera: 0,
 
             //具体版本号
             ver: null
@@ -63,49 +63,49 @@
 
         // 检测呈现引擎和浏览器
         // 检测Presto内核的Opera浏览器
-        if(window.opera){
+        if (window.opera) {
             engine.ver = browser.ver = window.opera.version();
             engine.opera = browser.opera = parseFloat(engine.ver);
         }
 
         // 检测WebKit 用代理字符串中的"AppleWebKit"进行检测
-        else if(/AppleWebKit\/(\S+)/.test(ua)){
+        else if (/AppleWebKit\/(\S+)/.test(ua)) {
             engine.ver = RegExp["$1"];
             engine.webkit = parseFloat(engine.ver);
 
             //确定 Microsoft Edge
-            if(/Edge\/(\S+)/.test(ua)){
+            if (/Edge\/(\S+)/.test(ua)) {
                 browser.ver = RegExp["$1"];
                 browser.edge = parseFloat(browser.ver);
             }
 
             // 确定WebKit内核Opera
-            else if(/OPR\/(\S+)/.test(ua)){
+            else if (/OPR\/(\S+)/.test(ua)) {
                 browser.ver = RegExp["$1"];
                 browser.opera = parseFloat(browser.ver);
             }
 
             // 确定Chrome
-            else if(/Chrome\/(\S+)/.test(ua)){
+            else if (/Chrome\/(\S+)/.test(ua)) {
                 browser.ver = RegExp["$1"];
                 browser.chrome = parseFloat(browser.ver);
             }
 
             // 确定Safari
-            else if(/Version\/(\S+)/.test(ua)){
+            else if (/Version\/(\S+)/.test(ua)) {
                 browser.ver = RegExp["$1"];
                 browser.safari = parseFloat(browser.ver);
-            }else{
+            } else {
 
                 // 近似的确定版本号
                 var safariVersion = 1;
-                if(engine.webkit < 100){
+                if (engine.webkit < 100) {
                     safariVersion = 1;
-                }else if(engine.webkit <312){
+                } else if (engine.webkit < 312) {
                     safariVersion = 1.2;
-                }else if(engine.webkit < 412){
+                } else if (engine.webkit < 412) {
                     safariVersion = 1.3;
-                }else{
+                } else {
                     safariVersion = 2;
                 }
                 browser.ver = browser.safari = safariVersion;
@@ -113,25 +113,25 @@
         }
 
         // 检测KHTML 用于Konqueror3.1及更早版本中不包含KHTML的版本，故而就要使用Konqueror的版本来代替
-        else if(/KHTML\/(\S+)/.test(ua) || /Konqueror\/(\S+)/.test(ua)){
+        else if (/KHTML\/(\S+)/.test(ua) || /Konqueror\/(\S+)/.test(ua)) {
             engine.ver = browser.ver = RegExp["$1"];
             engine.khtml = browser.konq = parseFloat(engine.ver);
         }
 
         // 检测Gecko 其版本号在字符串"rv:"的后面
-        else if(/rv:([^\)]+)\) Gecko\/\d{8}/.test(ua)){
+        else if (/rv:([^\)]+)\) Gecko\/\d{8}/.test(ua)) {
             engine.ver = RegExp["$1"];
             engine.gecko = parseFloat(engine.ver);
 
             // 确定Firefox
-            if(/Firefox\/(\S+)/.test(ua)){
+            if (/Firefox\/(\S+)/.test(ua)) {
                 browser.ver = RegExp["$1"];
                 browser.firefox = parseFloat(browser.ver);
             }
         }
 
         // 检测IE
-        else if(/MSIE ([^;]+)/.test(ua) || /rv:([^\)]+)\) like Gecko/.test(ua)){
+        else if (/MSIE ([^;]+)/.test(ua) || /rv:([^\)]+)\) like Gecko/.test(ua)) {
             engine.ver = browser.ver = RegExp["$1"];
             engine.ie = browser.ie = parseFloat(engine.ver);
         }
@@ -140,15 +140,15 @@
         var p = window.navigator.platform;
 
         // 检测平台
-        system.win = p.indexOf("Win") == 0;
-        system.mac = p.indexOf("Mac") == 0;
+        system.win = p.indexOf("Win") === 0;
+        system.mac = p.indexOf("Mac") === 0;
         system.unix = (p == "Xll'") || (p.indexOf("Linux") == 0);
 
         // 检测Windows操作系统
-        if(system.win){
-            if(/Win(?:dows )?([^do]{2})\s?(\d+\.\d+)?/.test(ua)){
-                if(RegExp["$1"] == "NT"){
-                    switch(RegExp["$2"]){
+        if (system.win) {
+            if (/Win(?:dows )?([^do]{2})\s?(\d+\.\d+)?/.test(ua)) {
+                if (RegExp["$1"] === "NT") {
+                    switch (RegExp["$2"]) {
                         case "5.0":
                             system.win = "2000";
                             break;
@@ -185,26 +185,26 @@
         system.nokiaN = ua.indexOf("NokiaN") > -1;
 
         // window mobile
-        if(system.win == "CE"){
+        if (system.win === "CE") {
             system.winMobile = system.win;
-        }else if(system.win == "Ph"){
-            if(/Windows Phone OS (\d+.\d+)/.test(ua)){
+        } else if (system.win === "Ph") {
+            if (/Windows Phone OS (\d+.\d+)/.test(ua)) {
                 system.win = "Phone";
                 system.winMobile = parseFloat(RegExp["$1"]);
             }
         }
 
         // 检测iOS版本
-        if(system.mac && ua.indexOf("Mobile") > -1){
-            if(/CPU (?:iPhone )?OS (\d+.\d+)/.test(ua)){
-                system.ios = parseFloat(RegExp["$1"].replace("_","."));
-            }else{
+        if (system.mac && ua.indexOf("Mobile") > -1) {
+            if (/CPU (?:iPhone )?OS (\d+.\d+)/.test(ua)) {
+                system.ios = parseFloat(RegExp["$1"].replace("_", "."));
+            } else {
                 system.ios = 2; //不能真正检测出来，所以只能猜测
             }
         }
 
         // 检测安卓版本
-        if(/Android (\d+.\d+)/.test(ua)){
+        if (/Android (\d+.\d+)/.test(ua)) {
             system.android = parseFloat(RegExp["$1"]);
         }
 
@@ -212,10 +212,10 @@
         system.wii = ua.indexOf("wii") > -1;
         system.ps = /playstation/i.test(ua);
 
-        if (browser.ver == 6) {
+        if (browser.ver === 6) {
             try {
                 document.execCommand("BackgroundImageCache", false, true);
-            } catch(e) {}
+            } catch (e) {}
         }
 
         return {

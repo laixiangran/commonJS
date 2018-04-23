@@ -4,7 +4,7 @@
  * for String
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -17,7 +17,7 @@
          * @param  {String} bitStr
          * @return {String}
          */
-        binToBase64: function(bitStr) {
+        binToBase64: function (bitStr) {
             var result = "";
             var tail = bitStr.length % 6;
             var bitStringTemp1 = bitStr.substr(0, bitStr.length - tail);
@@ -40,7 +40,7 @@
          * @param  {String} base64Str
          * @return {String}
          */
-        base64ToBin: function(base64Str) {
+        base64ToBin: function (base64Str) {
             var bitString = "";
             var tail = 0;
             for (var i = 0, len = base64Str.length; i < len; i++) {
@@ -60,7 +60,7 @@
          * @param  {String} str
          * @return {String}
          */
-        strToBin: function(str) {
+        strToBin: function (str) {
             var result = "";
             for (var i = 0, len = str.length; i < len; i++) {
                 var charCode = str.charCodeAt(i).toString(2);
@@ -89,7 +89,7 @@
          * @param {String} str
          * @return {String}
          */
-        strToBase64: function(str) {
+        strToBase64: function (str) {
             return this.binToBase64(this.strToBin(str));
         },
 
@@ -99,7 +99,7 @@
          * @param {String} base64Str
          * @return {String}
          */
-        base64ToStr: function(base64Str) {
+        base64ToStr: function (base64Str) {
             return this.binToStr(this.base64ToBin(base64Str));
         },
 
@@ -110,11 +110,11 @@
          * @param {Function} callback 回调函数
          * @return {String}
          */
-        imgToBase64: function(url, callback) {
+        imgToBase64: function (url, callback) {
             var image = new Image();
             image.crossOrigin = "anonymous"; // 引用其他服务器下的图片，不发送凭证
             image.src = url;
-            image.onload = function() {
+            image.onload = function () {
                 var canvas = document.createElement("canvas");
                 canvas.width = image.width;
                 canvas.height = image.height;
@@ -133,8 +133,8 @@
          * @param {String} str
          * @return {String}
          */
-        camelize: function(str) {
-            return str.replace(/-([a-z])/ig, function(all, letter) {
+        camelize: function (str) {
+            return str.replace(/-([a-z])/ig, function (all, letter) {
                 return letter.toUpperCase();
             });
         },
@@ -145,7 +145,7 @@
          * @param {String} str
          * @return {String}
          */
-        trim: function(str) {
+        trim: function (str) {
             return str.replace(/^\s+|\s+$/g, "");
         },
 
@@ -155,13 +155,13 @@
          * @param {String} str
          * @return {String}
          */
-        rgbToHex: function(str) {
+        rgbToHex: function (str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
             if (/^(rgb|RGB)/.test(str)) {
-                var aColor = str.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+                var aColor = str.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
                 var strHex = "#";
-                for (var i= 0, len = aColor.length; i < len; i++) {
+                for (var i = 0, len = aColor.length; i < len; i++) {
                     var hex = Number(aColor[i]).toString(16);
                     if (hex === "0") {
                         hex += hex;
@@ -173,12 +173,12 @@
                 }
                 return strHex;
             } else if (reg.test(str)) {
-                var aNum = str.replace(/#/,"").split("");
+                var aNum = str.replace(/#/, "").split("");
                 if (aNum.length === 6) {
                     return str;
                 } else if (aNum.length === 3) {
                     var numHex = "#";
-                    for (var j= 0, l = aNum.length; j < l; j++) {
+                    for (var j = 0, l = aNum.length; j < l; j++) {
                         numHex += (aNum[j] + aNum[j]);
                     }
                     return numHex;
@@ -194,7 +194,7 @@
          * @param {String} str
          * @return {String}
          */
-        hexToRgb: function(str) {
+        hexToRgb: function (str) {
             // 十六进制颜色值的正则表达式
             var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
             var sColor = str.toLowerCase();

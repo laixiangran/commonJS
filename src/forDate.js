@@ -4,7 +4,7 @@
  * for Date
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -16,13 +16,13 @@
          * @param {Date} date 当前日期
          * @return {Number}
          */
-        getDateInterval: function(date) {
+        getDateInterval: function (date) {
             var d = new Date(date);
-            if (d == "Invalid Date") {
+            if (d === "Invalid Date") {
                 throw "Invalid Date";
-            }else {
+            } else {
                 // Math.abs 绝对值
-                return Math.abs(this*1-d*1)/60/60/1000/24;
+                return Math.abs(this * 1 - d * 1) / 60 / 60 / 1000 / 24;
             }
         },
 
@@ -32,7 +32,7 @@
          * @param {Date} date 当前日期
          * @return {Date}
          */
-        getFirstDateInMonth: function(date) {
+        getFirstDateInMonth: function (date) {
             return new Date(date.getFullYear(), date.getMonth(), 1);
         },
 
@@ -42,8 +42,8 @@
          * @param {Date} date 当前日期
          * @return {Date}
          */
-        getLastDateInMonth: function(date) {
-            return new Date(date.getFullYear(), date.getMonth()+1, 0);
+        getLastDateInMonth: function (date) {
+            return new Date(date.getFullYear(), date.getMonth() + 1, 0);
         },
 
         /**
@@ -52,8 +52,8 @@
          * @param {Date} date 当前日期
          * @return {Date}
          */
-        getFirstDateInQuarter: function(date) {
-            return new Date(date.getFullYear(), Math.floor(date.getMonth()/3)*3, 1);
+        getFirstDateInQuarter: function (date) {
+            return new Date(date.getFullYear(), Math.floor(date.getMonth() / 3) * 3, 1);
         },
 
         /**
@@ -62,8 +62,8 @@
          * @param {Date} date 当前日期
          * @return {Date}
          */
-        isLeapYear: function(date) {
-            return new Date(date.getFullYear(), 2, 0).getDate() == 29;
+        isLeapYear: function (date) {
+            return new Date(date.getFullYear(), 2, 0).getDate() === 29;
         },
 
         /**
@@ -73,9 +73,9 @@
          * @param {Number} month 月
          * @return {Number}
          */
-        daysInMonth: function(year, month) {
+        daysInMonth: function (year, month) {
             var d = new Date();
-            d.setFullYear(year, (month == 12) ? 1 : month, 0);
+            d.setFullYear(year, (month === 12) ? 1 : month, 0);
             return d.getDate();
         }
     };

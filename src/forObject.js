@@ -4,7 +4,7 @@
  * for Object
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -13,7 +13,7 @@
          * @author laixiangran@163.com
          * @description 空函数
          */
-        noop: function() {},
+        noop: function () {},
 
         /**
          * @author laixiangran@163.com
@@ -44,16 +44,16 @@
          * @param {Object} source 原始对象
          * @return {Object}
          */
-        deepextend: function(target, source) {
+        deepextend: function (target, source) {
             for (var p in source) {
                 if (source.hasOwnProperty(p)) {
                     var copy = source[p];
-                    if ( target === copy ) {
+                    if (target === copy) {
                         continue;
                     }
-                    if (typeof copy === "object"){
+                    if (typeof copy === "object") {
                         target[p] = arguments.callee(target[p] || {}, copy);
-                    }else{
+                    } else {
                         target[p] = copy;
                     }
                 }
@@ -68,11 +68,11 @@
          * @param {Object} parent 继承对象
          * @return {Object}
          */
-        wrapper: function(self, parent) {
-            var ins = function() {
+        wrapper: function (self, parent) {
+            var ins = function () {
                 self.apply(this, arguments);
             };
-            var subclass = function() {};
+            var subclass = function () {};
             subclass.prototype = parent.prototype;
             ins.prototype = new subclass;
             return ins;

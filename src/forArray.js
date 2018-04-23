@@ -4,11 +4,11 @@
  * for Array
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
-    com.$A = (function() {
+    com.$A = (function () {
         var ret = {
             /**
              * @author laixiangran@163.com
@@ -16,7 +16,7 @@
              * @param {Object} obj
              * @return {Boolean}
              */
-            isArray: function(obj) {
+            isArray: function (obj) {
                 if (Array.isArray) {
                     return Array.isArray(obj);
                 } else {
@@ -32,15 +32,15 @@
              * @param {Number} from 开始查找的位置
              * @return {Number}
              */
-            indexOf: function(array, item, from) {
+            indexOf: function (array, item, from) {
                 if (array.indexOf) {
                     return isNaN(from) ? array.indexOf(item) : array.indexOf(item, from);
                 } else {
                     var len = array.length;
                     from = isNaN(from) ? 0 :
                         from < 0 ? Math.ceil(from) + len : Math.floor(from);
-                    for (; from < len; from++ ) {
-                        if ( array[from] === item ) {
+                    for (; from < len; from++) {
+                        if (array[from] === item) {
                             return from;
                         }
                     }
@@ -56,15 +56,15 @@
              * @param {Number} from 开始查找的位置
              * @return {Number}
              */
-            lastIndexOf: function(array, item, from) {
+            lastIndexOf: function (array, item, from) {
                 if (array.lastIndexOf) {
                     return isNaN(from) ? array.lastIndexOf(item) : array.lastIndexOf(item, from);
                 } else {
                     var len = array.length;
                     from = isNaN(from) || from >= len - 1 ? len - 1 :
                         from < 0 ? Math.ceil(from) + len : Math.floor(from);
-                    for (; from > -1; from-- ) {
-                        if ( array[from] === item ) {
+                    for (; from > -1; from--) {
+                        if (array[from] === item) {
                             return from;
                         }
                     }
@@ -102,8 +102,8 @@
              * @param {Function} callback
              * @param {Object} thisp
              */
-            forEach: function(object, callback, thisp) {
-                each(object, function() {
+            forEach: function (object, callback, thisp) {
+                each(object, function () {
                     callback.apply(thisp, arguments);
                 });
             },
@@ -116,9 +116,9 @@
              * @param {Object} thisp
              * @return {Array}
              */
-            map: function(object, callback, thisp) {
+            map: function (object, callback, thisp) {
                 var arr = [];
-                each(object, function() {
+                each(object, function () {
                     arr.push(callback.apply(thisp, arguments));
                 });
                 return arr;
@@ -132,9 +132,9 @@
              * @param {Object} thisp
              * @return {Array}
              */
-            filter: function(object, callback, thisp) {
+            filter: function (object, callback, thisp) {
                 var arr = [];
-                each(object, function(item) {
+                each(object, function (item) {
                     callback.apply(thisp, arguments) && arr.push(item);
                 });
                 return arr;
@@ -148,9 +148,9 @@
              * @param {Object} thisp
              * @return {Boolean}
              */
-            every: function(object, callback, thisp) {
+            every: function (object, callback, thisp) {
                 var flag = true;
-                each(object, function() {
+                each(object, function () {
                     if (!callback.apply(thisp, arguments)) {
                         flag = false;
                         return false;
@@ -167,9 +167,9 @@
              * @param {Object} thisp
              * @return {Boolean}
              */
-            some: function(object, callback, thisp) {
+            some: function (object, callback, thisp) {
                 var flag = false;
-                each(object, function() {
+                each(object, function () {
                     if (callback.apply(thisp, arguments)) {
                         flag = true;
                         return false;
@@ -177,8 +177,8 @@
                 });
                 return flag;
             }
-        }, function(method, name) {
-            ret[name] = function(object, callback, thisp) {
+        }, function (method, name) {
+            ret[name] = function (object, callback, thisp) {
                 if (object[name]) {
                     return object[name](callback, thisp);
                 } else {

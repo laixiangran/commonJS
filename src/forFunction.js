@@ -4,11 +4,11 @@
  * for Function
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
-    com.$F = (function() {
+    com.$F = (function () {
         var slice = Array.prototype.slice;
         return {
             /**
@@ -18,9 +18,9 @@
              * @param {Object} thisp 新绑定到this的对象
              * @return {Function}
              */
-            bind: function(fun, thisp) {
+            bind: function (fun, thisp) {
                 var args = slice.call(arguments, 2);
-                return function() {
+                return function () {
                     return fun.apply(thisp, args.concat(slice.call(arguments)));
                 };
             },
@@ -31,9 +31,9 @@
              * @param {Function} fun 函数
              * @return {Function}
              */
-            currying: function(fun) {
+            currying: function (fun) {
                 var args = [];
-                return function() {
+                return function () {
                     if (arguments.length === 0) {
                         return fun.apply(this, args);
                     } else {
@@ -48,8 +48,8 @@
              * @param {Function} fun 函数
              * @return {Function}
              */
-            uncurrying: function(fun) {
-                return function() {
+            uncurrying: function (fun) {
+                return function () {
                     return Function.prototype.call.apply(fun, arguments);
                 };
             },
@@ -60,11 +60,11 @@
              * @param {Function} fun 函数
              * @param {Number} interval 延迟执行的时间
              */
-            throttle: function(fun, interval) {
+            throttle: function (fun, interval) {
                 var _self = fun, // 保存需要被延迟执行的函数引用
                     timer = null, // 定时器
                     firstTime = true; // 是否第一次调用
-                return function() {
+                return function () {
                     var args = arguments,
                         _me = this;
 
@@ -79,7 +79,7 @@
                         return false;
                     }
 
-                    timer = setTimeout(function() {
+                    timer = setTimeout(function () {
                         clearTimeout(timer);
                         timer = null;
                         _self.apply(_me, args);
@@ -95,14 +95,14 @@
              * @param {Number} count 一次处理的数据量
              * @param {Number} interval 每次处理的时间间隔
              */
-            timeChunk: function(datas, fun, count, interval) {
-                var start = function() {
+            timeChunk: function (datas, fun, count, interval) {
+                var start = function () {
                     for (var i = 0; i < Math.min(count || 1, datas.length); i++) {
                         var obj = datas.shift();
                         fun(obj);
                     }
                 };
-                var timer = setInterval(function() {
+                var timer = setInterval(function () {
                     if (datas.length === 0) {
                         clearInterval(timer);
                     }
@@ -117,8 +117,8 @@
              * @param {Function} beforeFun 主函数执行之前的运行程序
              * @param {Function} afterFun 主函数执行之后的运行程序
              */
-            aop: function(fun, beforeFun, afterFun) {
-                return function() {
+            aop: function (fun, beforeFun, afterFun) {
+                return function () {
                     beforeFun.apply(this, arguments); // 修正this
                     fun.apply(this, arguments);
                     afterFun.apply(this, arguments);

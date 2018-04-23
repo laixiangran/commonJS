@@ -3,7 +3,7 @@
  * 主页：http://www.laixiangran.cn
  * for Event
  */
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -15,7 +15,7 @@
          * @param {String} type 事件类型
          * @param {Function} handler 事件处理程序
          */
-        addEvent: function(element, type, handler) {
+        addEvent: function (element, type, handler) {
             if (element.addEventListener) {
                 element.addEventListener(type, handler, false);
             } else if (element.attachEvent) {
@@ -32,7 +32,7 @@
          * @param {String} type 事件类型
          * @param {Function} handler 事件处理程序
          */
-        removeEvent: function(element, type, handler) {
+        removeEvent: function (element, type, handler) {
             if (element.removeEventListener) {
                 element.removeEventListener(type, handler, false);
             } else if (element.detachEvent) {
@@ -48,7 +48,7 @@
          * @param {Event} event 事件对象
          * @return {Event}
          */
-        getEvent: function(event) {
+        getEvent: function (event) {
             return event ? event : window.event;
         },
 
@@ -58,7 +58,7 @@
          * @param {Event} event 事件对象
          * @return {Element}
          */
-        getTarget: function(event) {
+        getTarget: function (event) {
             return event.target || event.srcElement;
         },
 
@@ -67,8 +67,8 @@
          * @description 取消事件的默认行为
          * @param {Event} event 事件对象
          */
-        preventDefault: function(event) {
-            if (event.preventDefault){
+        preventDefault: function (event) {
+            if (event.preventDefault) {
                 event.preventDefault();
             } else {
                 event.returnValue = false; // IE
@@ -80,7 +80,7 @@
          * @description 阻止事件流（阻止事件捕获和冒泡）
          * @param {Event} event 事件对象
          */
-        stopPropagation: function(event) {
+        stopPropagation: function (event) {
             if (event.stopPropagation) {
                 event.stopPropagation();
             } else {
@@ -94,7 +94,7 @@
          * @param {Event} event 事件对象
          * @return {Element}
          */
-        getRelatedTarget: function(event) {
+        getRelatedTarget: function (event) {
             if (event.relatedTarget) {
                 return event.relatedTarget;
             } else if (event.toElement) { // IE下的mouseout事件
@@ -112,7 +112,7 @@
          * @param {Event} event 鼠标事件对象
          * @return {Number}
          */
-        getButton: function(event) {
+        getButton: function (event) {
             //  检测是否支持DOM版鼠标事件
             if (document.implementation.hasFeature("MouseEvents", "2.0")) {
                 return event.button;
@@ -139,12 +139,12 @@
          * @param {Event} event 滚轮事件对象
          * @return {Number}
          */
-        getWheelDelta: function(event) {
+        getWheelDelta: function (event) {
             // 当向前滚动鼠标滚轮时，wheelDelta是120的倍数；当向后滚动鼠标滚轮时，wheelDelta是-120的倍数
-            if (event.wheelDelta){
+            if (event.wheelDelta) {
                 // Opera 9.5之前的版本中，wheelDelta值的正负号是颠倒的，则这里需要使用浏览器检测技术来确定实际的值
                 return (com.$B.engine.opera && com.$B.engine.opera < 9.5 ?
-                        -event.wheelDelta : event.wheelDelta);
+                    -event.wheelDelta : event.wheelDelta);
             } else { // Firefox下，有关鼠标滚轮的信息则保存在detail属性中，当向前滚动鼠标滚轮时，这个属性的值是-3的倍数，当向后滚动鼠标滚轮时，这个属性的值是3的倍数
                 return -event.detail * 40;
             }
@@ -156,7 +156,7 @@
          * @param {Event} event 键盘事件对象
          * @return {Number}
          */
-        getCharCode: function(event) {
+        getCharCode: function (event) {
             if (typeof event.charCode == "number") {
                 return event.charCode;
             } else {
@@ -170,7 +170,7 @@
          * @param {Event} event 剪切事件对象
          * @return {String}
          */
-        getClipboardText: function(event) {
+        getClipboardText: function (event) {
             var clipboardData = (event.clipboardData || window.clipboardData);
 
             // clipboardData.getData()用于从剪贴板中取得数据，它接受一个参数，即要取得的数据的格式
@@ -186,7 +186,7 @@
          * @param {String} value 设置的内容
          * @return {Boolean}
          */
-        setClipboardText: function(event, value) {
+        setClipboardText: function (event, value) {
             if (event.clipboardData) {
                 // 由于Safari和Chrome的clipboardData.setData()方法不能识别"text"类型，则这里只能写"text/plain"
                 return event.clipboardData.setData("text/plain", value);

@@ -4,7 +4,7 @@
  * for Number
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -16,7 +16,7 @@
          * @param {Number} n 小数位
          * @return {Number}
          */
-        toFixedReturnNumber: function(num, n) {
+        toFixedReturnNumber: function (num, n) {
             return Number(num.toFixed(n));
         },
 
@@ -26,7 +26,7 @@
          * @param {Number} num 处理的数字
          * @return {Number}
          */
-        integer: function(num) {
+        integer: function (num) {
             // Math.ceil 向上舍入，Math.floor 向下舍入
             return Math[num < 0 ? "ceil" : "floor"](this);
         }

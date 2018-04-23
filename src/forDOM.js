@@ -4,7 +4,7 @@
  * for DOM
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
 
     var com = window.COM = window.COM || {};
 
@@ -16,7 +16,7 @@
          * @param {HTMLElement} context 查找的范围元素
          * @return {HTMLElement}
          */
-        byId: function(id, context) {
+        byId: function (id, context) {
             var ctx = context || document;
             return ctx.getElementById(id);
         },
@@ -28,7 +28,7 @@
          * @param {HTMLElement} context 查找的范围元素
          * @return {HTMLCollection}
          */
-        byClassName: function(className, context) {
+        byClassName: function (className, context) {
             var ctx = context || document;
             return ctx.getElementsByClassName(className);
         },
@@ -40,7 +40,7 @@
          * @param {HTMLElement} context 查找的范围元素
          * @return {HTMLCollection}
          */
-        byTagName: function(tagName, context) {
+        byTagName: function (tagName, context) {
             var ctx = context || document;
             return ctx.getElementsByTagName(tagName);
         },
@@ -51,11 +51,11 @@
          * @param {HTMLElement} element 元素
          * @param {*} className 添加的类，可以单个添加也可多个一起添加
          */
-        addClass: function(element, className) {
+        addClass: function (element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
             }
-            com.$A.forEach(className, function(c) {
+            com.$A.forEach(className, function (c) {
                 if (element.classList) {
                     element.classList.add(c);
                 } else {
@@ -74,11 +74,11 @@
          * @param {HTMLElement} element 元素
          * @param {*} className 删除的类，可以单个删除也可多个一起删除
          */
-        removeClass: function(element, className) {
+        removeClass: function (element, className) {
             if (!com.$A.isArray(className)) {
                 className = [className.toString()]
             }
-            com.$A.forEach(className, function(c) {
+            com.$A.forEach(className, function (c) {
                 if (element.classList) {
                     element.classList.remove(c);
                 } else {
@@ -99,7 +99,7 @@
          * @param {Boolean} isSelf 是否返回自身，默认为false
          * @return {String}
          */
-        getHtml: function(element, isSelf) {
+        getHtml: function (element, isSelf) {
             isSelf = isSelf || false;
             return isSelf ? element.outerHTML : element.innerHTML;
         },
@@ -110,7 +110,7 @@
          * @param {HTMLElement} element 元素
          * @return {String}
          */
-        getText: function(element) {
+        getText: function (element) {
             return (typeof element.innerText == "string") ? element.innerText : element.textContent;
         },
 
@@ -128,7 +128,7 @@
          * "beforeend"：在当前元素之下插入一个新的子元素或在最后一个子元素之后再插入新的子元素；
          * "afterend"：在当前元素之后插入一个紧邻的同辈元素。
          */
-        inserHtml: function(element, elemStr, type) {
+        inserHtml: function (element, elemStr, type) {
             if (!type || type == "inner" || type == "outer") {
                 type == "outer" ? element.outerHTML = elemStr : element.innerHTML = elemStr;
             } else {
@@ -142,7 +142,7 @@
          * @param {HTMLElement} parentElem 父元素
          * @param {String,Node} node 插入的节点
          */
-        append: function(parentElem, node) {
+        append: function (parentElem, node) {
             if (typeof node == "string") {
                 var div = document.createElement("div");
                 div.innerHTML = node;
@@ -160,7 +160,7 @@
          * @param {String} id iframe的id
          * @param {Number} endTime 计算的时间
          */
-        adjustIframe: function(id, endTime) {
+        adjustIframe: function (id, endTime) {
             var iframe = this.byId(id),
                 time = 0,
                 end = endTime || 30,
@@ -175,6 +175,7 @@
                     var iheight = Math.max(idoc.body.scrollHeight, idoc.documentElement.scrollHeight);
                     iframe.style.height = iheight + "px";
                 }
+
                 intervalID = setInterval(callback, 50)
             }
         },
@@ -185,8 +186,9 @@
          * @param {HTMLElement} elem 拖拽的元素
          * @param {Function} callback 拖拽结束之后的回调函数
          */
-        drag: function(elem, callback) {
-            callback = callback || function() {};
+        drag: function (elem, callback) {
+            var _this = this;
+            callback = callback || function () {};
             var $D = this;
             var params = {
                 left: 0,
@@ -201,13 +203,13 @@
             if ($D.getStyle(elem, "top") !== "auto") {
                 params.top = $D.getStyle(elem, "top");
             }
-            elem.onmousedown = function(event) {
+            elem.onmousedown = function (event) {
                 params.flag = true;
                 event = event || window.event;
                 params.currentX = event.clientX;
                 params.currentY = event.clientY;
             };
-            document.onmousemove = function(event) {
+            document.onmousemove = function (event) {
                 event = event || window.event;
                 if (params.flag) {
                     var nowX = event.clientX,
@@ -218,13 +220,13 @@
                     elem.style.top = parseInt(params.top) + disY + "px";
                 }
             };
-            document.onmouseup = function() {
+            document.onmouseup = function () {
                 params.flag = false;
                 if ($D.getStyle(elem, "left") !== "auto") {
-                    params.left = $D.getStyle(elem, "left");
+                    params.left = _this.getStyle(elem, "left");
                 }
                 if ($D.getStyle(elem, "top") !== "auto") {
-                    params.top = $D.getStyle(elem, "top");
+                    params.top = _this.getStyle(elem, "top");
                 }
                 callback(elem);
             };
@@ -236,7 +238,7 @@
          * @param {HTMLElement} elem
          * @return {Number}
          */
-        getScrollTop: function(elem) {
+        getScrollTop: function (elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollTop || doc.body.scrollTop;
         },
@@ -247,7 +249,7 @@
          * @param {HTMLElement} elem
          * @return {Number}
          */
-        getScrollLeft: function(elem) {
+        getScrollLeft: function (elem) {
             var doc = elem ? elem.ownerDocument : document;
             return doc.documentElement.scrollLeft || doc.body.scrollLeft;
         },
@@ -258,7 +260,7 @@
          * @param {HTMLElement} elem
          * @return {Number}
          */
-        getElementLeft: function(elem) {
+        getElementLeft: function (elem) {
             var actualLeft = elem.offsetLeft;
             var current = elem.offsetParent;
             while (current !== null) {
@@ -274,11 +276,11 @@
          * @param {HTMLElement} elem
          * @return {Number}
          */
-        getElementTop: function(elem) {
+        getElementTop: function (elem) {
             var actualTop = elem.offsetTop;
             var current = elem.offsetParent;
             while (current !== null) {
-                actualTop += current. offsetTop;
+                actualTop += current.offsetTop;
                 current = current.offsetParent;
             }
             return actualTop;
@@ -290,7 +292,7 @@
          * @param {HTMLElement} elem
          * @return {Object}
          */
-        getRect: function(elem) {
+        getRect: function (elem) {
             var left = 0,
                 top = 0,
                 right = 0,
@@ -323,7 +325,7 @@
          * @param {HTMLElement} elem
          * @return {Object}
          */
-        getClientRect: function(elem) {
+        getClientRect: function (elem) {
             var rect = this.getRect(elem),
                 sLeft = this.getScrollLeft(elem),
                 sTop = this.getScrollTop(elem);
@@ -339,7 +341,7 @@
          * @description 获取浏览器视口大小
          * @return {Object}
          */
-        getViewport: function() {
+        getViewport: function () {
             if (document.compatMode == "BackCompat") { // 判断是否运行在混杂模式
                 return {
                     "width": document.body.clientWidth,
@@ -360,10 +362,10 @@
          * @param {HTMLElement} elemB 被包含元素
          * @return {Boolean}
          */
-        contains: function(elemA, elemB) {
-            if (typeof elemA.contains == "function" && (!COM.$B.engine.webkit || COM.$B.engine.webkit >= 522)) {
+        contains: function (elemA, elemB) {
+            if (typeof elemA.contains === "function" && (!COM.$B.engine.webkit || COM.$B.engine.webkit >= 522)) {
                 return elemA.contains(elemB);
-            } else if (typeof elemA.compareDocumentPosition == "function") {
+            } else if (typeof elemA.compareDocumentPosition === "function") {
                 return !!(elemA.compareDocumentPosition(elemB) & 16);
             } else {
                 var node = elemB.parentNode;
@@ -384,8 +386,8 @@
          * @parma {HTMLElement} elem
          * @return {CSSStyleDeclaration}
          */
-        getCurStyle: function(elem) {
-            if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
+        getCurStyle: function (elem) {
+            if (document.defaultView && typeof document.defaultView.getComputedStyle === "function") {
                 return document.defaultView.getComputedStyle(elem, null);
             } else {
                 return elem.currentStyle;
@@ -396,26 +398,26 @@
          * @author laixiangran@163.com
          * @description 获取元素指定的css属性的值
          * @param {HTMLElement} elem 当前元素
-         * @parma {String} name css属性名
+         * @param {String} name css属性名
          * @return {*}
          */
-        getStyle: function(elem, name) {
+        getStyle: function (elem, name) {
             var style = null;
-            if (document.defaultView && typeof document.defaultView.getComputedStyle == "function") {
+            if (document.defaultView && typeof document.defaultView.getComputedStyle === "function") {
                 style = document.defaultView.getComputedStyle(elem, null);
                 return name in style ? style[name] : style.getPropertyValue(name);
             } else {
                 var curStyle = elem.currentStyle;
                 style = elem.style;
 
-                if (name == "opacity") {
+                if (name === "opacity") {
                     if (/alpha\(opacity=(.*)\)/i.test(curStyle.filter)) {
                         var opacity = parseFloat(RegExp.$1);
                         return opacity ? opacity / 100 : 0;
                     }
                     return 1;
                 }
-                if (name == "float") {
+                if (name === "float") {
                     name = "styleFloat";
                 }
                 var ret = curStyle[name] || curStyle[com.$S.camelize(name)];
@@ -442,23 +444,23 @@
          * @parma {String,Object} style css属性名
          * @param {*} value css属性的指（可选）
          */
-        setStyle: function(elems, style, value) {
+        setStyle: function (elems, style, value) {
             if (!elems.length) {
                 elems = [elems];
             }
-            if (typeof style == "string") {
+            if (typeof style === "string") {
                 var s = style;
                 style = {};
                 style[s] = value;
             }
-            com.$A.forEach(elems, function(elem) {
+            com.$A.forEach(elems, function (elem) {
                 for (var name in style) {
                     if (style.hasOwnProperty(name)) {
                         var value = style[name];
-                        if (name == "opacity" && com.$B.browser.ie) {
-                            elem.style.filter = (elem.currentStyle && elem.currentStyle.filter || "").replace( /alpha\([^)]*\)/, "" ) + " alpha(opacity=" + (value * 100 | 0) + ")";
-                        } else if (name == "float") {
-                            elem.style[com.$B.browser.ie ? "styleFloat" : "cssFloat" ] = value;
+                        if (name === "opacity" && com.$B.browser.ie) {
+                            elem.style.filter = (elem.currentStyle && elem.currentStyle.filter || "").replace(/alpha\([^)]*\)/, "") + " alpha(opacity=" + (value * 100 | 0) + ")";
+                        } else if (name === "float") {
+                            elem.style[com.$B.browser.ie ? "styleFloat" : "cssFloat"] = value;
                         } else {
                             elem.style[com.$S.camelize(name)] = value;
                         }
@@ -473,7 +475,7 @@
          * @param {HTMLElement} elem
          * @return {Object}
          */
-        getSize: function(elem) {
+        getSize: function (elem) {
             var width = elem.offsetWidth,
                 height = elem.offsetHeight;
             if (!width && !height) {
@@ -519,7 +521,7 @@
          * @param {Number} startIndex 开始点
          * @param {Number} stopIndex 结束点
          */
-        selectText: function(textbox, startIndex, stopIndex) {
+        selectText: function (textbox, startIndex, stopIndex) {
             if (textbox.setSelectionRange) {
                 textbox.setSelectionRange(startIndex, stopIndex);
             } else if (textbox.createTextRange) {
@@ -538,8 +540,8 @@
          * @param {HTMLInputElement} textbox 文本框
          * @return {String}
          */
-        getSelectedText: function(textbox) {
-            if (typeof textbox.selectionStart == "number") {
+        getSelectedText: function (textbox) {
+            if (typeof textbox.selectionStart === "number") {
                 return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
             } else if (document.selection) {
                 // 兼容IE8及更早的版本，document.selection.createRange()保存着用户在整个文档范围内选择的文本信息。
@@ -558,7 +560,7 @@
          * @param {Boolean} isAvg 是采用平均值算法还是采用YUV与RGB变化关系算法
          * @return {HTMLImageElement}
          */
-        removeImageColors: function(img, isAvg) {
+        removeImageColors: function (img, isAvg) {
             var oCanvas = document.createElement("canvas"),
                 oCtx = oCanvas.getContext("2d"),
                 nWidth = img.offsetWidth,
@@ -577,13 +579,13 @@
             aPix = oImgData.data;
             nPixLen = aPix.length;
 
-            calFunc = (function() {
+            calFunc = (function () {
                 if (isAvg) {
-                    return function(r, g ,b) {
+                    return function (r, g, b) {
                         return Math.round((r + g + b) / 3);
                     };
                 } else {
-                    return function(r, g ,b) {
+                    return function (r, g, b) {
                         return Math.round((0.3 * r + 0.59 * g + 0.11 * b));
                     };
                 }
